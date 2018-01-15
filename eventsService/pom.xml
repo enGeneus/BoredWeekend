@@ -5,12 +5,12 @@
 	<artifactId>eventsservice</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>Events Service</name>
+	<name>eventsService</name>
 	
 	<properties>
 		<cxf.version>3.2.1</cxf.version>
 		<cxf.xjc-utils.version>3.2.0</cxf.xjc-utils.version>
-		<spring.version>5.0.2.RELEASE</spring.version>
+		<spring.version>4.3.13.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -98,6 +98,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>Events Service</finalName>
+		<finalName>eventsService</finalName>
 	</build>
 </project>

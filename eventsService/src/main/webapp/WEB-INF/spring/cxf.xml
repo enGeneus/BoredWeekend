@@ -7,11 +7,11 @@
                            http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd 
                            http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
-    <jaxws:endpoint id="ActivitiesHTTP" 
-			xmlns:activitiesService="http://it.univaq.disim.sose.boredweekend/providers/activitiesService"
-		    address="/activitiesService" 
-		    serviceName="ActivitiesService"
-		    endpointName="ActivitiesPort" 
-		    implementor="#ActivitiesPTImpl">
+    <jaxws:endpoint id="EventsHTTP" 
+			xmlns:eventsService="http://it.univaq.disim.sose.boredweekend/providers/eventsService"
+		    address="/eventsService" 
+		    serviceName="EventsService"
+		    endpointName="EventsPort" 
+		    implementor="#EventsPTImpl">
 	</jaxws:endpoint>
 </beans>

@@ -9,5 +9,5 @@
 	                    http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd 
 	                    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="cxf.xml"/>
-	<context:component-scan base-package="it.univaq.disim.sose.boredweekend.activitiesservice.webservice"/>
+	<context:component-scan base-package="it.univaq.disim.sose.boredweekend.eventsservice.webservice"/>
 </beans>

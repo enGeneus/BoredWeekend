@@ -9,6 +9,7 @@
         <jxb:globalBindings>
             <jxb:javaType name="java.util.Date" xmlType="xsd:dateTime" parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDateTime" printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDateTime"/>
             <jxb:javaType name="java.util.Date" xmlType="xsd:date" parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDate" printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDate"/>
+            <jxb:javaType name="java.util.Date" xmlType="xsd:time" parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseTime" printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printTime"/>
         </jxb:globalBindings>
     </jaxws:bindings>
 </jaxws:bindings>
