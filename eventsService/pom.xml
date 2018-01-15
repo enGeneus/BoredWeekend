@@ -1,31 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>it.univaq.disim.sose.bowe</groupId>
-  <artifactId>eventsService</artifactId>
-  <packaging>war</packaging>
-  <version>1.0.0-SNAPSHOT</version>
-  <name>eventsService</name>
-  <url>http://maven.apache.org</url>
-  <properties>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.univaq.disim.sose.boredweekend</groupId>
+	<artifactId>eventsservice</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Events Service</name>
+	
+	<properties>
 		<cxf.version>3.2.1</cxf.version>
 		<cxf.xjc-utils.version>3.2.0</cxf.xjc-utils.version>
-		<spring.version>4.3.12.RELEASE</spring.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
+		<spring.version>5.0.2.RELEASE</spring.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.4</version>
-		</dependency>
-		
+
+	<dependencies>
+
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -68,9 +58,9 @@
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.2</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.2</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -90,10 +80,13 @@
 								<wsdlOption>
 									<wsdl>src/main/resources/eventsService.wsdl</wsdl>
 									<faultSerialVersionUID>1</faultSerialVersionUID>
+									<bindingFiles>
+										<bindingFile>src/main/resources/binding.xml</bindingFile>
+									</bindingFiles>
 									<extraargs>
 										<extraarg>-verbose</extraarg>
 										<extraarg>-p </extraarg>
-										<extraarg>it.univaq.disim.sose.bowe.eventsService</extraarg>
+										<extraarg>it.univaq.disim.sose.boredweekend.eventsservice</extraarg>
 									</extraargs>
 								</wsdlOption>
 							</wsdlOptions>
@@ -105,6 +98,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>eventsService</finalName>
+		<finalName>Events Service</finalName>
 	</build>
 </project>
