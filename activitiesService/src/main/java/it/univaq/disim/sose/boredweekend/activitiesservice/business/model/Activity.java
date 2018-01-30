@@ -115,5 +115,13 @@ public class Activity {
 	public List<ActivityCategory> getCategories() {
 		return categories;
 	}
+	
+	public void setCategories(List<ActivityCategory> categories) {
+		this.categories = categories;
+	}
+	
+	public void setDays(List<WeekDay> days) {
+		this.days = days;
+	}
 
 }
