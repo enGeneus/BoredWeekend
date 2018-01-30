@@ -7,9 +7,12 @@ import it.univaq.disim.sose.boredweekend.activitiesservice.Daytime;
 import it.univaq.disim.sose.boredweekend.activitiesservice.WeekDay;
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.model.Activity;
 
-public interface ActivitiesService {
+public interface ActivityDAO {
 
-	void storeActivity(Activity activity);
+	public void insert(Activity activity);
 
-	List<Activity> getActivity(String city, List<ActivityCategory> category, List<WeekDay> day, Daytime daytime);
+	public Activity find(int id);
+
+	public List<Activity> find(String city, List<ActivityCategory> category, List<WeekDay> day, Daytime daytime);
+
 }

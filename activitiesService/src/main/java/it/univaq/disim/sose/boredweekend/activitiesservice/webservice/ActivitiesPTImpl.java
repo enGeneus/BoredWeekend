@@ -2,6 +2,8 @@ package it.univaq.disim.sose.boredweekend.activitiesservice.webservice;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import it.univaq.disim.sose.boredweekend.activitiesservice.business.model.Activi
 
 @Component(value = "ActivitiesPTImpl")
 public class ActivitiesPTImpl implements ActivitiesPT{
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiesPTImpl.class);
 
 	@Autowired
 	private ActivitiesService service;
@@ -28,7 +32,9 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 	@Override
 	public CityActivitiesResponse getCityActivities(CityActivitiesRequest parameters) {
 		List<Activity> activities = service.getActivity(parameters.getCity(), parameters.getCategory(), parameters.getDay(), parameters.getDaytime());
-		// Complete this method
+
+		LOGGER.info(activities.get(0).getName());
+		
 		return new CityActivitiesResponse();
 	}
 	

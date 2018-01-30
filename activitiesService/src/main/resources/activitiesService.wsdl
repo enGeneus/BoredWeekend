@@ -20,7 +20,7 @@
 					<xsd:element name="city" type="xsd:string" />
 					<xsd:element name="category" type="tns:ActivityCategory" minOccurs="0" maxOccurs="6"/>
 					<xsd:element name="day" type="tns:WeekDay" maxOccurs="7" />
-					<xsd:element name="daytime" type="xsd:time" minOccurs="0"/>
+					<xsd:element name="daytime" type="tns:Daytime" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:complexType>
 
@@ -41,7 +41,7 @@
 					<xsd:element name="name" type="xsd:string" />
 					<xsd:element name="city" type="xsd:string" />
 					<xsd:element name="position" type="tns:Position" />
-					<xsd:element name="daytime" type="xsd:time" />
+					<xsd:element name="daytime" type="tns:Daytime" />
 					<xsd:element name="days" type="tns:WeekDay" maxOccurs="7" />
 					<xsd:element name="category" type="tns:ActivityCategory" maxOccurs="6"/>
 					<xsd:element name="state" type="xsd:boolean" />

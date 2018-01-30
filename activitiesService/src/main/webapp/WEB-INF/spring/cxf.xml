@@ -10,8 +10,8 @@
     <jaxws:endpoint id="ActivitiesHTTP" 
 			xmlns:activitiesService="http://it.univaq.disim.sose.boredweekend/providers/activitiesService"
 		    address="/activitiesService" 
-		    serviceName="ActivitiesService"
-		    endpointName="ActivitiesPort" 
+		    serviceName="activitiesService:ActivitiesService"
+		    endpointName="activitiesService:ActivitiesPort" 
 		    implementor="#ActivitiesPTImpl">
 	</jaxws:endpoint>
 </beans>
