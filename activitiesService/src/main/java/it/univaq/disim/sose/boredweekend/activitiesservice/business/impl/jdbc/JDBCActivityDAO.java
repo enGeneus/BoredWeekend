@@ -36,6 +36,11 @@ public class JDBCActivityDAO implements ActivityDAO {
 	private static final String PAYMENT_COLUMN = "payment";
 	private static final String IMG_COLUMN = "img";
  	
+	private static final String FK_ACTIVITIES_ID = "id_activity";
+	private static final String CATEGORY_COLUMN = "category";
+	private static final String DAY_COLUMN = "day";
+	
+	
 	@Autowired
 	private DataSource dataSource;
 
@@ -51,9 +56,10 @@ public class JDBCActivityDAO implements ActivityDAO {
 	}
 
 	@Override
-	public List<Activity> find(String city, List<ActivityCategory> category, List<WeekDay> day, Daytime daytime) {
+	public List<Activity> find(String city, List<ActivityCategory> categories, List<WeekDay> days, Daytime daytime) {
 
 		String sql = "SELECT * FROM activities WHERE " + CITY_COLUMN + "=\"" + city + "\" AND " + DAYTIME_COLUMN + "=\"" + daytime.value() + "\"";
+//		SELECT * FROM activities as a JOIN activities_days ON a.id_activity=activities_days.id_activity
 
 		LOGGER.info("Activity DAO is going to perform the query: " + sql);
 
@@ -64,7 +70,6 @@ public class JDBCActivityDAO implements ActivityDAO {
 		try {
 			con = dataSource.getConnection();
 			st = con.createStatement();
-
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				Activity activity = new Activity();
@@ -73,10 +78,12 @@ public class JDBCActivityDAO implements ActivityDAO {
 				activity.setCity(rs.getString(CITY_COLUMN));
 				activity.setLat(rs.getLong(LAT_COLUMN));
 				activity.setLat(rs.getLong(LON_COLUMN));
-//				activity.setDaytime(rs.getString(DAYTIME_COLUMN));
+				activity.setDaytime(Daytime.fromValue(rs.getString(DAYTIME_COLUMN)));
 				activity.setState(rs.getBoolean(STATE_COLUMN));
+				activity.setInfo(rs.getString(INFO_COLUMN));
 				activity.setPayment(rs.getBoolean(PAYMENT_COLUMN));
 				activity.setImg(rs.getBytes(IMG_COLUMN));
+
 				result.add(activity);
 			}
 
