@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Creato il: Gen 15, 2018 alle 16:38
+-- Creato il: Gen 30, 2018 alle 11:06
 -- Versione del server: 5.5.42
 -- Versione PHP: 5.6.10
 
@@ -26,7 +26,7 @@ CREATE TABLE `activities` (
   `city` varchar(100) DEFAULT NULL,
   `lat` double DEFAULT NULL,
   `longi` double DEFAULT NULL,
-  `daytime` time DEFAULT NULL,
+  `daytime` varchar(11) DEFAULT NULL,
   `state` tinyint(1) NOT NULL,
   `info` text NOT NULL,
   `payment` tinyint(1) NOT NULL,
