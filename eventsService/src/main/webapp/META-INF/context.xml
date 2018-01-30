@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" antiResourceLocking="true" path="/activitiesService">
     <Resource 
-        name="BW_activities" 
+        name="jdbc/BW_events" 
         type="javax.sql.DataSource" 
         driverClassName="com.mysql.jdbc.Driver" 
         logAbandoned="true"

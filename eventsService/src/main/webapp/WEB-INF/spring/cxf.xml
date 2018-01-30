@@ -10,8 +10,8 @@
     <jaxws:endpoint id="EventsHTTP" 
 			xmlns:eventsService="http://it.univaq.disim.sose.boredweekend/providers/eventsService"
 		    address="/eventsService" 
-		    serviceName="EventsService"
-		    endpointName="EventsPort" 
+		    serviceName="eventsService:EventsService"
+		    endpointName="eventsService:EventsPort" 
 		    implementor="#EventsPTImpl">
 	</jaxws:endpoint>
 </beans>
