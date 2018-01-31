@@ -123,5 +123,6 @@ public class Activity {
 	public void setDays(List<WeekDay> days) {
 		this.days = days;
 	}
+	
 
 }

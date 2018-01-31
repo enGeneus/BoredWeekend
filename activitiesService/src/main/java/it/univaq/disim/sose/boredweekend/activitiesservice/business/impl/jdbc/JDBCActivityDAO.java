@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+
+import org.apache.log4j.net.SMTPAppender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,38 +50,55 @@ public class JDBCActivityDAO implements ActivityDAO {
 
 	@Override
 	public void insert(Activity activity) {
+
 		String query = "INSERT INTO `activities`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+LAT_COLUMN+"`, `"+LON_COLUMN+"`, `"+DAYTIME_COLUMN+"`, `"+STATE_COLUMN+"`, `"+INFO_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`)"
-				+ " VALUES ("+activity.getName()+","+activity.getCity()+","+activity.getLat()+","+activity.getLon()+","+activity.getDaytime()+","+activity.isState()+","+activity.getInfo()+","+activity.isPayment()+","+activity.getImg()+")";
+				+ " VALUES ('"+activity.getName()+"','"+activity.getCity()+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isState()+",'"+activity.getInfo()+"',"+activity.isPayment()+","+activity.getImg()+")";		
 		
 		Connection con = null;
-		Statement st = null;
-		
 		try {
+			
+		    int numero;
+		    int risultato = -1;
 			con = dataSource.getConnection();
-			st = con.createStatement();
-			st.executeUpdate(query);
-
+			
+	        Statement stmt = con.createStatement();
+	        numero = stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+	        
+	        ResultSet rs = stmt.getGeneratedKeys();
+	        if (rs.next()){
+	            risultato=rs.getInt(1);
+	            }
+	        
+	        //ciclo per la generazione della query delle categorie
+	        List<ActivityCategory> category = activity.getCategories();
+	     
+	        for(ActivityCategory i : category) {
+		        String query_category = "INSERT INTO `category_type`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+i+"')";
+		        stmt.executeUpdate(query_category);
+	        }
+	            
+	        //ciclo per la generazione della query dei giorni
+	        List<WeekDay> days = activity.getDays();
+	        
+	        for(WeekDay i : days) {
+		        String query_days = "INSERT INTO `activities_days`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+i+"')";
+		        stmt.executeUpdate(query_days);
+	        }
+	        
+	        rs.close();
+	        stmt.close();
+	        		   
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			if (st != null) {
-				try {
-					st.close();
-				} catch (SQLException e) {
-				}
-			}
 			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
 				}
 			}
-		}
-		
-		
-		
-		
+		}	
 	}
 
 	@Override

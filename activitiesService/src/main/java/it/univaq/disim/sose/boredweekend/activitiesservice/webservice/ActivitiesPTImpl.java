@@ -24,9 +24,23 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 
 	@Override
 	public void addActivity(ActivityType activity) {
-		// Complete this method
-		service.storeActivity(new Activity());
+		//Complete this method
+		Activity attivita = new Activity();
 		
+		attivita.setCategories(activity.getCategory());
+		attivita.setDays(activity.getDays());
+		attivita.setCity(activity.getCity());
+		attivita.setDaytime(activity.getDaytime());
+		attivita.setImg(activity.getImg());
+		attivita.setInfo(activity.getInfo());
+		attivita.setLat(activity.getPosition().getLatitude());
+		attivita.setLon(activity.getPosition().getLongitude());
+		attivita.setName(activity.getName());
+		attivita.setPayment(activity.isPayment());
+		attivita.setState(activity.isState());
+				
+		service.storeActivity(attivita);
+		//service.storeActivity(new Activity());
 	}
 
 	@Override

@@ -5,3 +5,5 @@ target/
 bin/
 logs/
 output/
+/.metadata/
+/.recommenders/
