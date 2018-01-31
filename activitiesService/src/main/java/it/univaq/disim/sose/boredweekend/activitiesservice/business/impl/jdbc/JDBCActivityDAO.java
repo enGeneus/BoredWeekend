@@ -135,10 +135,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 							category_list.add(a);
 						}
 					}
-					
-					System.err.println(category_list);
-					System.err.println(day_list);
-				
+
 					Activity activity = new Activity();
 					
 					activity.setId(rs.getInt(ID_COLUMN));
