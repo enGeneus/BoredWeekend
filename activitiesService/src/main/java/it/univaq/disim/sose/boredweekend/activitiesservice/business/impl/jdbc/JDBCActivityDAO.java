@@ -48,7 +48,38 @@ public class JDBCActivityDAO implements ActivityDAO {
 
 	@Override
 	public void insert(Activity activity) {
-		// TODO Auto-generated method stub		
+		String query = "INSERT INTO `activities`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+LAT_COLUMN+"`, `"+LON_COLUMN+"`, `"+DAYTIME_COLUMN+"`, `"+STATE_COLUMN+"`, `"+INFO_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`)"
+				+ " VALUES ("+activity.getName()+","+activity.getCity()+","+activity.getLat()+","+activity.getLon()+","+activity.getDaytime()+","+activity.isState()+","+activity.getInfo()+","+activity.isPayment()+","+activity.getImg()+")";
+		
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = dataSource.getConnection();
+			st = con.createStatement();
+			st.executeUpdate(query);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		
+		
+		
+		
 	}
 
 	@Override
