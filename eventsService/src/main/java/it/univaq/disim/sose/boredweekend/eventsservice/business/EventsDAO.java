@@ -5,9 +5,12 @@ import java.util.List;
 
 import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Events;
 
-public interface EventsService {
+public interface EventsDAO {
 
-	void storeEvent(Events event);
+	public void insert(Events event);
 
-	List<Events> getEvents(String city, Date start, Date end);
+	public Events find(int id);
+
+	public List<Events> find(String city, Date start, Date end);
+
 }
