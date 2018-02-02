@@ -4,6 +4,7 @@
         name="jdbc/BW_events" 
         type="javax.sql.DataSource" 
         driverClassName="com.mysql.jdbc.Driver" 
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
         logAbandoned="true"
         removeAbandoned="true"
 		removeAbandonedTimeout="90"
@@ -12,9 +13,9 @@
 		timeBetweenEvictionRunsMillis="50000"
         url="jdbc:mysql://localhost:3306/BW_events"
         username="root"
+        password="root"
         maxActive="30"
         maxIdle="5"
         maxWait="10000"
-        validationQuery="select 1"
     />
 </Context>

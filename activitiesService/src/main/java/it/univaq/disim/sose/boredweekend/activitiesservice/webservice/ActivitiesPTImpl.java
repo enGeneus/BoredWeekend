@@ -40,7 +40,6 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 		attivita.setState(activity.isState());
 				
 		service.storeActivity(attivita);
-		//service.storeActivity(new Activity());
 	}
 
 	@Override

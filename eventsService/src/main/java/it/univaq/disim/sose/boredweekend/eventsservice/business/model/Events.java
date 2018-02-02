@@ -1,7 +1,6 @@
 package it.univaq.disim.sose.boredweekend.eventsservice.business.model;
 
 import java.util.Date;
-import java.util.List;
 
 import it.univaq.disim.sose.boredweekend.eventsservice.EventCategory;
 
@@ -20,7 +19,7 @@ public class Events {
 	private byte[] img;
 	private boolean payment;
 	
-	List<EventCategory> category;
+	EventCategory category;
 	
 	public String getInfo() {
 		return info;
@@ -88,10 +87,10 @@ public class Events {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public void setCategory(List<EventCategory> categories) {
+	public void setCategory(EventCategory categories) {
 		this.category = categories;
 	}
-	public List<EventCategory> getCategories() {
+	public EventCategory getCategories() {
 		return this.category;	
 	}
 	public int getId() {

@@ -31,7 +31,7 @@ public class JDBCEventsServiceImpl implements EventsService {
 
 	@Override
 	public void storeEvent(Events event) {
-		//eventDAO.insert(event);
+		eventDAO.insert(event);
 
 		// TODO Auto-generated method stub
 		

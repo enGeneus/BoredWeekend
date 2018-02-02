@@ -40,6 +40,9 @@ public class JDBCEventsDAO implements EventsDAO {
 	private static final String IMG_COLUMN = "img";
 	private static final String LOCATION_COLUMN = "location_name";
 	private static final String DESCRIPTION_COLUMN = "description";
+	private static final String INFO_COLUMN = "info";
+	private static final String ADDRESS_COLUMN = "address";
+
 	
 	// nomi colonne tabella category
 	private static final String FK_ACTIVITIES_ID_CATEGORY = "id_event";
@@ -51,8 +54,8 @@ public class JDBCEventsDAO implements EventsDAO {
 	@Override
 	public void insert(Events event) {
 
-		String query = "INSERT INTO `"+EVENTS+"`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+DATE_COLUMN+"`, `"+START_COLUMN+"`, `"+END_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`, `"+LOCATION_COLUMN+"`, `"+DESCRIPTION_COLUMN+"`)"
-				+ " VALUES ('"+event.getName()+"','"+event.getCity()+"',"+event.getDate()+","+event.getStart()+","+event.getEnd()+","+event.isPayment()+","+event.getImg()+",'"+event.getLocation_name()+"','"+event.getDescription()+"')";		
+		String query = "INSERT INTO `"+EVENTS+"`(`"+NAME_COLUMN+"`,`"+INFO_COLUMN+"`,`"+ADDRESS_COLUMN+"`, `"+CITY_COLUMN+"`, `"+DATE_COLUMN+"`, `"+START_COLUMN+"`, `"+END_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`, `"+LOCATION_COLUMN+"`, `"+DESCRIPTION_COLUMN+"`)"
+				+ " VALUES ('"+event.getName().replace("'", "\\'")+"','"+event.getInfo().replace("'", "\\'")+"','"+event.getAddress().replace("'", "\\'")+"','"+event.getCity().replace("'", "\\'")+"','"+date2Translate(event.getDate())+"','"+dateTranslate(event.getStart())+"','"+dateTranslate(event.getEnd())+"',"+event.isPayment()+","+event.getImg()+",'"+event.getLocation_name().replace("'", "\\'")+"','"+event.getDescription().replace("'", "\\'")+"')";		
 		
 		// dobbiamo fare i controlli sulle caratteristiche dell'evento?
 		
@@ -71,14 +74,12 @@ public class JDBCEventsDAO implements EventsDAO {
 	            risultato=rs.getInt(1);
 	            }
 	        
-	        //ciclo per la generazione della query delle categorie
 	        
-	        List<EventCategory> category = event.getCategories();
+	        EventCategory category = event.getCategories();
 	     
-	        for(EventCategory i : category) {
-		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+i+"')";
+		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+category.value()+"')";
 		        stmt.executeUpdate(query_category);
-	        }
+	        
 	        
 	        rs.close();
 	        stmt.close();
@@ -102,13 +103,57 @@ public class JDBCEventsDAO implements EventsDAO {
 		return null;
 	}
 
+	public String dateTranslate(Date date) {
+		
+		String year = date.toString().substring(24, 28);
+		String month;
+		int month_int = date.getMonth();
+		
+		if(9<=month_int) {
+			month_int = month_int+1;
+			month = Integer.toString(month_int);
+		}else {
+			month_int+=1;
+			month = "0"+Integer.toString(month_int);
+		}
+
+		String day = date.toString().substring(8, 10);
+		String date_final = year+"-"+month+"-"+day;
+		String time = date.toString().substring(11, 19);
+		String start_day_time = date_final+" "+time;
+		
+		return start_day_time;			
+	}
+
+	public String date2Translate(Date date) {
+		
+		String year = date.toString().substring(24, 28);
+		String month;
+		int month_int = date.getMonth();
+		
+		if(9<=month_int) {
+			month_int = month_int+1;
+			month = Integer.toString(month_int);
+		}else {
+			month_int+=1;
+			month = "0"+Integer.toString(month_int);
+		}
+
+		String day = date.toString().substring(8, 10);
+		String date_final = year+"-"+month+"-"+day;
+	
+		return date_final;			
+	}
+	
 	@Override
 	public List<Events> find(String city, Date start, Date end) {
-
+		
 		// inizio costruzione query
-		String sql_init = "SELECT a.*, c."+CATEGORY_COLUMN+" FROM "+EVENTS+" as a JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city+""
-				+ "'AND a."+START_COLUMN+">="+start+"AND a."+END_COLUMN+"<="+end;	
+		String sql_init = "SELECT a.*, c."+CATEGORY_COLUMN+" FROM "+EVENTS+" as a JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" = '"+city.replace("'", "\\'")+""
+				+"' AND a."+START_COLUMN+" >= '"+dateTranslate(start)+"' AND a."+END_COLUMN+" <= '"+dateTranslate(end)+"'";	
 			
+		System.out.println(sql_init);
+
 		//sql_init contiene la query del giusto formato
 		
 		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
@@ -166,7 +211,9 @@ public class JDBCEventsDAO implements EventsDAO {
 					event.setImg(rs.getBytes(IMG_COLUMN));
 					event.setDescription(rs.getString(DESCRIPTION_COLUMN));
 					event.setLocation_name(rs.getString(LOCATION_COLUMN));
-					event.setCategory(category_list);
+					event.setAddress(rs.getString(ADDRESS_COLUMN));
+					event.setInfo(rs.getString(INFO_COLUMN));
+					event.setCategory(category_list.get(0));
 					eventMap.put(rs.getInt(ID_COLUMN), event);
 					result.add(event);
 				

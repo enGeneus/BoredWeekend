@@ -57,7 +57,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 	public void insert(Activity activity) {
 
 		String query = "INSERT INTO `"+ACTIVITIES+"`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+LAT_COLUMN+"`, `"+LON_COLUMN+"`, `"+DAYTIME_COLUMN+"`, `"+STATE_COLUMN+"`, `"+INFO_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`)"
-				+ " VALUES ('"+activity.getName()+"','"+activity.getCity()+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isState()+",'"+activity.getInfo()+"',"+activity.isPayment()+","+activity.getImg()+")";		
+				+ " VALUES ('"+activity.getName().replace("'", "\\'")+"','"+activity.getCity().replace("'", "\\'")+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isState()+",'"+activity.getInfo().replace("'", "\\'")+"',"+activity.isPayment()+","+activity.getImg()+")";		
 		
 		// dobbiamo fare i controlli sulle caratteristiche dell'attività?
 		
@@ -80,7 +80,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 	        List<ActivityCategory> category = activity.getCategories();
 	     
 	        for(ActivityCategory i : category) {
-		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+i+"')";
+		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+i.value()+"')";
 		        stmt.executeUpdate(query_category);
 	        }
 	            
@@ -88,7 +88,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 	        List<WeekDay> days = activity.getDays();
 	        
 	        for(WeekDay i : days) {
-		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+i+"')";
+		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+i.value()+"')";
 		        stmt.executeUpdate(query_days);
 	        }
 	        
@@ -118,7 +118,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 	public List<Activity> find(String city, List<ActivityCategory> categories, List<WeekDay> days, Daytime daytime) {
 
 		// inizio costruzione query
-		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city+"'";	
+		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city.replace("'", "\\'")+"'";	
 		
 		if(!days.isEmpty()) {
 			sql_init += " AND (";		
