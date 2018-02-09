@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.univaq.disim.sose.boredweekend.activitiesservice.ActivityCategory;
-import it.univaq.disim.sose.boredweekend.activitiesservice.Daytime;
-import it.univaq.disim.sose.boredweekend.activitiesservice.WeekDay;
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.ActivitiesService;
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.ActivityDAO;
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.model.Activity;
@@ -30,7 +27,7 @@ public class JDBCActivitiesServiceImpl implements ActivitiesService {
 	}
 
 	@Override
-	public List<Activity> getActivity(String city, List<ActivityCategory> category, List<WeekDay> day, Daytime daytime) {
+	public List<Activity> getActivity(String city, List<String> category, List<String> day, String daytime) {
 
 		return activityDAO.find(city, category, day, daytime);
 	}

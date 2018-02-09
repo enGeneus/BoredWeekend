@@ -6,17 +6,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import it.univaq.disim.sose.boredweekend.activitiesservice.ActivityCategory;
-import it.univaq.disim.sose.boredweekend.activitiesservice.Daytime;
-import it.univaq.disim.sose.boredweekend.activitiesservice.WeekDay;
+
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.ActivityDAO;
 import it.univaq.disim.sose.boredweekend.activitiesservice.business.model.Activity;
 
@@ -57,52 +58,68 @@ public class JDBCActivityDAO implements ActivityDAO {
 	public void insert(Activity activity) {
 
 		String query = "INSERT INTO `"+ACTIVITIES+"`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+LAT_COLUMN+"`, `"+LON_COLUMN+"`, `"+DAYTIME_COLUMN+"`, `"+STATE_COLUMN+"`, `"+INFO_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`)"
-				+ " VALUES ('"+activity.getName().replace("'", "\\'")+"','"+activity.getCity().replace("'", "\\'")+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isState()+",'"+activity.getInfo().replace("'", "\\'")+"',"+activity.isPayment()+","+activity.getImg()+")";		
+				+ " VALUES ('"+activity.getName().replace("'", "\\'")+"','"+activity.getCity().replace("'", "\\'")+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isAvailable()+",'"+activity.getInfo().replace("'", "\\'")+"',"+activity.isPayment()+","+activity.getImg()+")";		
 		
 		// dobbiamo fare i controlli sulle caratteristiche dell'attività?
 		
 		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
 		try {
 			
-		    int numero;
 		    int risultato = -1;
 			con = dataSource.getConnection();
 			
-	        Statement stmt = con.createStatement();
-	        numero = stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+	        st = con.createStatement();
+	        st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 	        
-	        ResultSet rs = stmt.getGeneratedKeys();
+	        rs = st.getGeneratedKeys();
 	        if (rs.next()){
 	            risultato=rs.getInt(1);
 	            }
 	        
 	        //ciclo per la generazione della query delle categorie
-	        List<ActivityCategory> category = activity.getCategories();
+	        List<String> categories = activity.getCategories();
 	     
-	        for(ActivityCategory i : category) {
-		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+i.value()+"')";
-		        stmt.executeUpdate(query_category);
+	        for(String cateory : categories) {
+		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+cateory+"')";
+		        st.executeUpdate(query_category);
 	        }
 	            
 	        //ciclo per la generazione della query dei giorni
-	        List<WeekDay> days = activity.getDays();
+	        List<String> days = activity.getDays();
 	        
-	        for(WeekDay i : days) {
-		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+i.value()+"')";
-		        stmt.executeUpdate(query_days);
+	        for(String day : days) {
+		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+day+"')";
+		        st.executeUpdate(query_days);
 	        }
 	        
 	        rs.close();
-	        stmt.close();
+	        st.close();
 	        		   
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
 		}	
@@ -110,12 +127,88 @@ public class JDBCActivityDAO implements ActivityDAO {
 
 	@Override
 	public Activity find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		// inizio costruzione query
+		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+ID_COLUMN+" ='"+id+"'";	
+
+		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
+
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		Activity result = null;
+		Set<String> categories = new HashSet<>();
+		Set<String> days = new HashSet<>();
+		
+		try {
+			con = dataSource.getConnection();
+			st = con.createStatement();
+			rs = st.executeQuery(sql_init);
+			
+			// popolazione della lista di giorni e categorie
+			while(rs.next()) {
+				categories.add(rs.getString(CATEGORY_COLUMN));
+				days.add(rs.getString(DAY_COLUMN));
+			}
+			
+			// serve per far ripuntare alla prima locazione del result set 
+			rs.beforeFirst();
+			
+			// popolazione della lista di attività da ritornare
+			if (rs.next()) {
+				result = new Activity();
+
+				for (String day : days) {
+					result.getDays().add(day);
+				}
+
+				for (String category : categories) {
+					result.getCategories().add(category);
+				}
+
+				result.setId(rs.getInt(ID_COLUMN));
+				result.setName(rs.getString(NAME_COLUMN));
+				result.setCity(rs.getString(CITY_COLUMN));
+				result.setLat(rs.getLong(LAT_COLUMN));
+				result.setLat(rs.getLong(LON_COLUMN));
+				result.setDaytime(rs.getString(DAYTIME_COLUMN));
+				result.setState(rs.getBoolean(STATE_COLUMN));
+				result.setInfo(rs.getString(INFO_COLUMN));
+				result.setPayment(rs.getBoolean(PAYMENT_COLUMN));
+				result.setImg(rs.getBytes(IMG_COLUMN));
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override
-	public List<Activity> find(String city, List<ActivityCategory> categories, List<WeekDay> days, Daytime daytime) {
+	public List<Activity> find(String city, List<String> categories, List<String> days, String daytime) {
 
 		// inizio costruzione query
 		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city.replace("'", "\\'")+"'";	
@@ -139,7 +232,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 		}
 		
 		//sql_init contiene la query del giusto formato
-		sql_init = sql_init+" AND a.daytime='"+daytime.value()+"'";
+		sql_init = sql_init+" AND a.daytime='"+daytime+"'";
 		
 		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
 	
@@ -176,19 +269,19 @@ public class JDBCActivityDAO implements ActivityDAO {
 				// controllo che l'attività con quell'id non sia già stata inserita, se si scarto la riga
 				if(!activityMap.containsKey(rs.getInt(ID_COLUMN))) {
 					
-					List<WeekDay> day_list = new ArrayList<WeekDay>();
-					List<ActivityCategory> category_list = new ArrayList<ActivityCategory>();
+					List<String> day_list = new ArrayList<>();
+					List<String> category_list = new ArrayList<>();
 					
 					for(Map<Integer,String> m : listMap) {
-						if(m.containsKey(rs.getInt(ID_COLUMN)) && !day_list.contains(WeekDay.fromValue(m.get(rs.getInt(ID_COLUMN))))) {
-							WeekDay w = WeekDay.fromValue(m.get(rs.getInt(ID_COLUMN)));
+						if(m.containsKey(rs.getInt(ID_COLUMN)) && !day_list.contains(m.get(rs.getInt(ID_COLUMN)))) {
+							String w = m.get(rs.getInt(ID_COLUMN));
 							day_list.add(w);
 						}
 					}
 					
 					for(Map<Integer,String> m : listMap2) {
-						if(m.containsKey(rs.getInt(ID_COLUMN)) && !category_list.contains(ActivityCategory.fromValue(m.get(rs.getInt(ID_COLUMN))))) {
-							ActivityCategory a = ActivityCategory.fromValue(m.get(rs.getInt(ID_COLUMN)));
+						if(m.containsKey(rs.getInt(ID_COLUMN)) && !category_list.contains(m.get(rs.getInt(ID_COLUMN)))) {
+							String a = m.get(rs.getInt(ID_COLUMN));
 							category_list.add(a);
 						}
 					}
@@ -200,7 +293,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 					activity.setCity(rs.getString(CITY_COLUMN));
 					activity.setLat(rs.getLong(LAT_COLUMN));
 					activity.setLat(rs.getLong(LON_COLUMN));
-					activity.setDaytime(Daytime.fromValue(rs.getString(DAYTIME_COLUMN)));
+					activity.setDaytime(rs.getString(DAYTIME_COLUMN));
 					activity.setState(rs.getBoolean(STATE_COLUMN));
 					activity.setInfo(rs.getString(INFO_COLUMN));
 					activity.setPayment(rs.getBoolean(PAYMENT_COLUMN));

@@ -3,10 +3,6 @@ package it.univaq.disim.sose.boredweekend.activitiesservice.business.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.univaq.disim.sose.boredweekend.activitiesservice.ActivityCategory;
-import it.univaq.disim.sose.boredweekend.activitiesservice.Daytime;
-import it.univaq.disim.sose.boredweekend.activitiesservice.WeekDay;
-
 public class Activity {
 
 	private int id;
@@ -14,14 +10,14 @@ public class Activity {
 	private String city;
 	private double lat;
 	private double lon;
-	private Daytime daytime;
+	private String daytime;
 	private boolean state;
 	private String info;
 	private boolean payment;
 	private byte[] img;
 
-	List<WeekDay> days;
-	List<ActivityCategory> categories;
+	List<String> days;
+	List<String> categories;
 
 	public Activity() {
 		this.days = new ArrayList<>();
@@ -68,15 +64,15 @@ public class Activity {
 		this.lon = lon;
 	}
 
-	public Daytime getDaytime() {
+	public String getDaytime() {
 		return daytime;
 	}
 
-	public void setDaytime(Daytime daytime) {
+	public void setDaytime(String daytime) {
 		this.daytime = daytime;
 	}
 
-	public boolean isState() {
+	public boolean isAvailable() {
 		return state;
 	}
 
@@ -108,19 +104,19 @@ public class Activity {
 		this.img = img;
 	}
 
-	public List<WeekDay> getDays() {
+	public List<String> getDays() {
 		return days;
 	}
 
-	public List<ActivityCategory> getCategories() {
+	public List<String> getCategories() {
 		return categories;
 	}
 	
-	public void setCategories(List<ActivityCategory> categories) {
+	public void setCategories(List<String> categories) {
 		this.categories = categories;
 	}
 	
-	public void setDays(List<WeekDay> days) {
+	public void setDays(List<String> days) {
 		this.days = days;
 	}
 	
