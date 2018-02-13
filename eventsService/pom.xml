@@ -11,6 +11,9 @@
 		<cxf.version>3.2.1</cxf.version>
 		<cxf.xjc-utils.version>3.2.0</cxf.xjc-utils.version>
 		<spring.version>4.3.13.RELEASE</spring.version>
+		<mysql-connector.version>5.1.45</mysql-connector.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -35,6 +38,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+				<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
