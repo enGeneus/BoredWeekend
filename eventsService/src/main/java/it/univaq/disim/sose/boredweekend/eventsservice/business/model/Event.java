@@ -2,7 +2,7 @@ package it.univaq.disim.sose.boredweekend.eventsservice.business.model;
 
 import java.util.Date;
 
-public class Events {
+public class Event {
 	
 	private int id;
 	private String info;

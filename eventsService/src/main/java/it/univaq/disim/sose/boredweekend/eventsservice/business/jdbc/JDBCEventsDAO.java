@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.univaq.disim.sose.boredweekend.eventsservice.business.EventsDAO;
-import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Events;
+import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Event;
 import it.univaq.disim.sose.boredweekend.eventsservice.business.util.Utility;
 
 @Component
@@ -52,14 +52,14 @@ public class JDBCEventsDAO implements EventsDAO {
 	private DataSource dataSource;
 
 	@Override
-	public void insert(Events event) {
+	public void insert(Event event) {
 
 		String query = "INSERT INTO `" + EVENTS + "`(`" + NAME_COLUMN + "`,`" + INFO_COLUMN + "`,`" + ADDRESS_COLUMN
 				+ "`, `" + CITY_COLUMN + "`, `" + DATE_COLUMN + "`, `" + START_COLUMN + "`, `" + END_COLUMN + "`, `"
 				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`)"
 				+ " VALUES ('" + event.getName().replace("'", "\\'") + "','" + event.getInfo().replace("'", "\\'")
 				+ "','" + event.getAddress().replace("'", "\\'") + "','" + event.getCity().replace("'", "\\'") + "','"
-				+ Utility.dateTranslate(event.getStart()) + "','" + Utility.dateTranslate(event.getEnd()) + "',"
+				+ Utility.date2Mysql(event.getStart()) + "','" + Utility.date2Mysql(event.getEnd()) + "',"
 				+ event.isPayment() + "," + event.getImg() + ",'" + event.getLocationName().replace("'", "\\'") + "','"
 				+ event.getDescription().replace("'", "\\'") + "')";
 
@@ -119,34 +119,28 @@ public class JDBCEventsDAO implements EventsDAO {
 	}
 
 	@Override
-	public Events find(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Events> find(String city, Date start, Date end) {
+	public List<Event> find(String city, Date start, Date end) {
 
 		// inizio costruzione query
 		String sql_init = "SELECT a.*, c." + CATEGORY_COLUMN + " FROM " + EVENTS + " as a JOIN " + CATEGORY_TYPE
 				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE a." + CITY_COLUMN + " = '"
-				+ city.replace("'", "\\'") + "" + "' AND a." + START_COLUMN + " >= '" + Utility.dateTranslate(start)
-				+ "' AND a." + END_COLUMN + " <= '" + Utility.dateTranslate(end) + "'";
+				+ city.replace("'", "\\'") + "" + "' AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
+				+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
 
 		System.out.println(sql_init);
 
 		// sql_init contiene la query del giusto formato
 
-		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
+		LOGGER.debug("Activity DAO is going to perform the query: " + sql_init);
 
-		List<Events> result = new ArrayList<>();
+		List<Event> result = new ArrayList<>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 
 		// utilizziamo questa map per controllare che l'attività non sia già stata
 		// inserita nel result
-		Map<Integer, Events> eventMap = new HashMap<>();
+		Map<Integer, Event> eventMap = new HashMap<>();
 
 		// liste di map che rispettivamente conterranno giorni e categorie delle righe
 		// del result set
@@ -182,7 +176,7 @@ public class JDBCEventsDAO implements EventsDAO {
 						}
 					}
 
-					Events event = new Events();
+					Event event = new Event();
 
 					event.setId(rs.getInt(ID_COLUMN));
 					event.setName(rs.getString(NAME_COLUMN));

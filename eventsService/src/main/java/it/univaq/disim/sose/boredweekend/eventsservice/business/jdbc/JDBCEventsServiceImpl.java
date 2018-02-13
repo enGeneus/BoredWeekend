@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.univaq.disim.sose.boredweekend.eventsservice.business.EventsService;
-import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Events;
+import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Event;
 import it.univaq.disim.sose.boredweekend.eventsservice.business.EventsDAO;
 
 
@@ -24,13 +24,13 @@ public class JDBCEventsServiceImpl implements EventsService {
 
 
 	@Override
-	public List<Events> getEvents(String city, Date start, Date end) {
+	public List<Event> getEvents(String city, Date start, Date end) {
 
 		return eventDAO.find(city, start, end);
 	}
 
 	@Override
-	public void storeEvent(Events event) {
+	public void storeEvent(Event event) {
 		eventDAO.insert(event);
 
 		// TODO Auto-generated method stub
