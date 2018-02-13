@@ -231,8 +231,10 @@ public class JDBCActivityDAO implements ActivityDAO {
 			sql_init = sql_category.substring(0, sql_category.length()-4)+")";
 		}
 		
-		//sql_init contiene la query del giusto formato
-		sql_init = sql_init+" AND a.daytime='"+daytime+"'";
+		if (daytime!=null && !daytime.isEmpty()) {
+			//sql_init contiene la query del giusto formato
+			sql_init = sql_init+" AND a.daytime='"+daytime+"'";
+		}
 		
 		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
 	

@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.events.EventException;
 
 import it.univaq.disim.sose.boredweekend.eventsservice.CityEventsRequest;
 import it.univaq.disim.sose.boredweekend.eventsservice.CityEventsResponse;
@@ -41,13 +40,12 @@ public class EventsPTImpl implements EventsPT {
 		
 		addevent.setAddress(event.getAddress());
 		addevent.setCity(event.getCity());
-		addevent.setCategory(event.getCategory());
-		addevent.setDate(event.getDate());
+		addevent.setCategory(event.getCategory().value());
 		addevent.setDescription(event.getDescription());
 		addevent.setEnd(event.getEnd());
 		addevent.setInfo(event.getInfo());
 		addevent.setImg(event.getImg());
-		addevent.setLocation_name(event.getLocationName());
+		addevent.setLocationName(event.getLocationName());
 		addevent.setName(event.getName());
 		addevent.setPayment(event.isPayment());
 		addevent.setStart(event.getStart());

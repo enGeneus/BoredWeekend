@@ -43,7 +43,6 @@
 					<xsd:element name="address" type="xsd:string" />
 					<xsd:element name="city" type="xsd:string" />
 					<xsd:element name="name" type="xsd:string" />
-					<xsd:element name="date" type="xsd:date" />
 					<xsd:element name="start" type="xsd:dateTime" />
 					<xsd:element name="end" type="xsd:dateTime" />
 					<xsd:element name="description" type="xsd:string" />

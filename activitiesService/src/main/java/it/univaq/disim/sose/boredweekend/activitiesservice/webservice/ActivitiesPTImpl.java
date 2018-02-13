@@ -73,7 +73,9 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 			days.add(day.value());
 		}
 
-		List<Activity> activities = service.getActivity(parameters.getCity(), categories, days, parameters.getDaytime().value());
+		String daytimeValue = parameters.getDaytime()!=null ? parameters.getDaytime().value() : null;
+
+		List<Activity> activities = service.getActivity(parameters.getCity(), categories, days, daytimeValue);
 
 		CityActivitiesResponse response = new CityActivitiesResponse();
 
