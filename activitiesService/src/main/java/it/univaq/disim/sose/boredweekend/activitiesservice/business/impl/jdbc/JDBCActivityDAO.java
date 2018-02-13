@@ -136,7 +136,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 		Statement st = null;
 		ResultSet rs = null;
 
-		Activity result = null;
+		Activity activity = null;
 		Set<String> categories = new HashSet<>();
 		Set<String> days = new HashSet<>();
 		
@@ -156,26 +156,26 @@ public class JDBCActivityDAO implements ActivityDAO {
 			
 			// popolazione della lista di attività da ritornare
 			if (rs.next()) {
-				result = new Activity();
+				activity = new Activity();
 
 				for (String day : days) {
-					result.getDays().add(day);
+					activity.getDays().add(day);
 				}
 
 				for (String category : categories) {
-					result.getCategories().add(category);
+					activity.getCategories().add(category);
 				}
 
-				result.setId(rs.getInt(ID_COLUMN));
-				result.setName(rs.getString(NAME_COLUMN));
-				result.setCity(rs.getString(CITY_COLUMN));
-				result.setLat(rs.getLong(LAT_COLUMN));
-				result.setLat(rs.getLong(LON_COLUMN));
-				result.setDaytime(rs.getString(DAYTIME_COLUMN));
-				result.setState(rs.getBoolean(STATE_COLUMN));
-				result.setInfo(rs.getString(INFO_COLUMN));
-				result.setPayment(rs.getBoolean(PAYMENT_COLUMN));
-				result.setImg(rs.getBytes(IMG_COLUMN));
+				activity.setId(rs.getInt(ID_COLUMN));
+				activity.setName(rs.getString(NAME_COLUMN));
+				activity.setCity(rs.getString(CITY_COLUMN));
+				activity.setLat(rs.getLong(LAT_COLUMN));
+				activity.setLat(rs.getLong(LON_COLUMN));
+				activity.setDaytime(rs.getString(DAYTIME_COLUMN));
+				activity.setState(rs.getBoolean(STATE_COLUMN));
+				activity.setInfo(rs.getString(INFO_COLUMN));
+				activity.setPayment(rs.getBoolean(PAYMENT_COLUMN));
+				activity.setImg(rs.getBytes(IMG_COLUMN));
 
 			}
 			
@@ -204,7 +204,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 				}
 			}
 		}
-		return result;
+		return activity;
 	}
 
 	@Override

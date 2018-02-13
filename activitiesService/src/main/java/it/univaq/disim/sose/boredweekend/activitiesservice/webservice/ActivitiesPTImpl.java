@@ -52,7 +52,12 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 		addingActivity.setPayment(inputActivity.isPayment());
 		addingActivity.setState(inputActivity.isState());
 
-		service.storeActivity(addingActivity);
+		if (service!=null) {
+			LOGGER.info("Service not null");
+			service.storeActivity(addingActivity);
+		} else {
+			LOGGER.info("Service is null");
+		}
 
 		LOGGER.info("Activity Stored");
 	}

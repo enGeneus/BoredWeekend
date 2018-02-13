@@ -23,7 +23,6 @@ public class JDBCActivitiesServiceImpl implements ActivitiesService {
 	@Override
 	public void storeActivity(Activity activity) {
 		activityDAO.insert(activity);
-		// TODO Auto-generated method stub	
 	}
 
 	@Override
