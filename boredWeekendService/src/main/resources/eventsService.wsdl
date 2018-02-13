@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="Events"
+	targetNamespace="http://it.univaq.disim.sose.boredweekend/providers/eventsService"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy"
+	xmlns:tns="http://it.univaq.disim.sose.boredweekend/providers/eventsService"
+	xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+
+	<types>
+		<xsd:schema
+			targetNamespace="http://it.univaq.disim.sose.boredweekend/providers/eventsService">
+			<xsd:element name="cityEventsRequest" type="tns:CityEventsRequest" />
+			<xsd:element name="cityEventResponse" type="tns:CityEventsResponse" />
+			<xsd:element name="addEvent" type="tns:AddEventRequest" />
+
+			<xsd:complexType name="CityEventsRequest">
+				<xsd:sequence>
+					<xsd:element name="city" type="xsd:string" />
+					<xsd:element name="start" type="xsd:dateTime" />
+					<xsd:element name="end" type="xsd:dateTime" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="CityEventsResponse">
+				<xsd:sequence>
+					<xsd:element name="events" type="tns:EventType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="AddEventRequest">
+				<xsd:sequence>
+					<xsd:element name="event" type="tns:EventType" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="EventType">
+				<xsd:sequence>
+					<xsd:element name="category" type="tns:EventCategory" />
+					<xsd:element name="info" type="xsd:string" />
+					<xsd:element name="address" type="xsd:string" />
+					<xsd:element name="city" type="xsd:string" />
+					<xsd:element name="name" type="xsd:string" />
+					<xsd:element name="start" type="xsd:dateTime" />
+					<xsd:element name="end" type="xsd:dateTime" />
+					<xsd:element name="description" type="xsd:string" />
+					<xsd:element name="location_name" type="xsd:string" />
+					<xsd:element name="img" type="xsd:base64Binary" />
+					<xsd:element name="payment" type="xsd:boolean" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:simpleType name="EventCategory">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="LiveMusic" />
+					<xsd:enumeration value="Theatre" />
+					<xsd:enumeration value="Sport" />
+					<xsd:enumeration value="Culture" />
+					<xsd:enumeration value="Party" />
+					<xsd:enumeration value="Festival" />
+					<xsd:enumeration value="Exhibition" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</types>
+
+	<message name="cityEventsRequest">
+		<part name="parameters" element="tns:cityEventsRequest">
+		</part>
+	</message>
+	<message name="cityEventResponse">
+		<part name="parameters" element="tns:cityEventResponse">
+		</part>
+	</message>
+	<message name="addEventMessage">
+		<part name="parameters" element="tns:addEvent">
+		</part>
+	</message>
+
+	<portType name="EventsPT">
+		<operation name="getCityEvents">
+			<input message="tns:cityEventsRequest">
+			</input>
+			<output message="tns:cityEventResponse">
+			</output>
+		</operation>
+		<operation name="addEvent">
+			<input message="tns:addEventMessage">
+			</input>
+		</operation>
+	</portType>
+
+	<binding name="EventsBinding" type="tns:EventsPT">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="getCityEvents">
+			<soap:operation soapAction="getEvents" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="addEvent">
+			<soap:operation soapAction="addEvent" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+		</operation>
+	</binding>
+
+	<service name="EventsService">
+		<port name="EventsPort" binding="tns:EventsBinding">
+			<soap:address location="http://localhost:8080/eventsService/eventsService" />
+		</port>
+	</service>
+</definitions>
