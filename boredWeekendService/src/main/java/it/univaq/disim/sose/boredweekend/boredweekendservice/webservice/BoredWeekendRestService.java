@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 
 @RestController
@@ -13,10 +14,12 @@ public class BoredWeekendRestService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendRestService.class);
 
+
 	@RequestMapping(value = "/getWeekends", method = RequestMethod.GET, headers="Accept=application/json")
 	public Weekend getWeekends() {
 		LOGGER.info("Received getWeekends request");
-		return new Weekend();
+		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
+		return prosumerCore.buildWeekend();
 	}
 
 }
