@@ -59,7 +59,7 @@ public class JDBCEventsDAO implements EventsDAO {
 				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`)"
 				+ " VALUES ('" + event.getName().replace("'", "\\'") + "','" + event.getInfo().replace("'", "\\'")
 				+ "','" + event.getAddress().replace("'", "\\'") + "','" + event.getCity().replace("'", "\\'") + "','"
-				+ Utility.date2Mysql(event.getStart()) + "','" + Utility.date2Mysql(event.getEnd()) + "',"
+				+ "2018-10-10"+"','" + Utility.date2Mysql(event.getStart()) + "','" + Utility.date2Mysql(event.getEnd()) + "',"
 				+ event.isPayment() + "," + event.getImg() + ",'" + event.getLocationName().replace("'", "\\'") + "','"
 				+ event.getDescription().replace("'", "\\'") + "')";
 
