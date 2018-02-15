@@ -24,7 +24,7 @@ public class JDBCEventsServiceImpl implements EventsService {
 
 
 	@Override
-	public List<Event> getEvents(String city, Date start, Date end) {
+	public List<Event> getEvents(List<String> city, Date start, Date end) {
 
 		return eventDAO.find(city, start, end);
 	}

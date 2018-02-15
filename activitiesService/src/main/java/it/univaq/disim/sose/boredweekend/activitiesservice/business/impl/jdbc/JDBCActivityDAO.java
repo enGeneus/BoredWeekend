@@ -208,10 +208,30 @@ public class JDBCActivityDAO implements ActivityDAO {
 	}
 
 	@Override
-	public List<Activity> find(String city, List<String> categories, List<String> days, String daytime) {
+	public List<Activity> find(List<String> city, List<String> categories, List<String> days, String daytime) {
 
 		// inizio costruzione query
-		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city.replace("'", "\\'")+"'";	
+		
+		//old query
+		//String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+CITY_COLUMN+" ='"+city.replace("'", "\\'")+"'";	
+
+		String sql_init0 = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE";	
+
+		for(String citys : city) {
+			if(city.size() == 1) {
+				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
+			} else {
+				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
+			}	
+		}
+		String  sql_init;
+		
+		if(city.size() > 1) {
+			 sql_init = sql_init0.substring(0, sql_init0.length()-4);
+		}else {
+			 sql_init = sql_init0;
+		}
+		
 		
 		if(!days.isEmpty()) {
 			sql_init += " AND (";		

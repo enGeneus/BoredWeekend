@@ -17,7 +17,7 @@
 
 			<xsd:complexType name="CityEventsRequest">
 				<xsd:sequence>
-					<xsd:element name="city" type="xsd:string" />
+					<xsd:element name="city" type="xsd:string" maxOccurs="unbounded" />
 					<xsd:element name="start" type="xsd:dateTime" />
 					<xsd:element name="end" type="xsd:dateTime" />
 				</xsd:sequence>

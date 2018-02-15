@@ -9,6 +9,6 @@ public interface EventsDAO {
 
 	public void insert(Event event);
 
-	public List<Event> find(String city, Date start, Date end);
+	public List<Event> find(List<String> city, Date start, Date end);
 
 }

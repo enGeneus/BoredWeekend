@@ -16,6 +16,8 @@ public class app {
 		Date end = new Date(2019-1900, 01, 01, 8, 00, 00);
 		
 		
+		//la funzione ThreadEventService è cambiata perchè riceve come valore una lista di stringhe
+		/* 
 		ThreadEventService threadEvent = new ThreadEventService("Rome", start, end);
 		threadEvent.start();
 		threadEvent.join();
@@ -32,7 +34,7 @@ public class app {
 		for(Event a : lista) {
 			System.out.println(a.getLocationName());
 		}
-
+		*/
 				
 	}
 }

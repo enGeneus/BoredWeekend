@@ -9,5 +9,5 @@ public interface EventsService {
 
 	void storeEvent(Event event);
 
-	List<Event> getEvents(String city, Date start, Date end);
+	List<Event> getEvents(List<String> city, Date start, Date end);
 }

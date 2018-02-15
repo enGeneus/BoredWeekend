@@ -12,13 +12,12 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
 class ThreadEventService extends Thread {
 	
-	
-	private String city;
+	private List<String> city;
 	private Date start;
 	private Date end;
 	private List<Event> events;
 	
-	public ThreadEventService(String city, Date start, Date end) {
+	public ThreadEventService(List<String> city, Date start, Date end) {
 		this.city = city;
 		this.start = start;
 		this.end = end;
@@ -57,11 +56,15 @@ class ThreadEventService extends Thread {
 		EventsPT port = service.getEventsPort();
 		CityEventsRequest request = new CityEventsRequest();
 		
-		request.setCity(this.city);
+		for (String a : this.city) {
+			request.getCity().add(a);
+		}
+		
 		request.setStart(this.start);
 		request.setEnd(this.end);
 		
-		CityEventsResponse response = port.getCityEvents(request);		
+		CityEventsResponse response = port.getCityEvents(request);	
+		
 		setEvents(response.getEvents());
 
 	}
