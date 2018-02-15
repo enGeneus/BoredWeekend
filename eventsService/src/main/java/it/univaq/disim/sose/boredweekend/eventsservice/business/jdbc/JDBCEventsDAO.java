@@ -169,7 +169,7 @@ public class JDBCEventsDAO implements EventsDAO {
 			 sql_init = sql_init0;
 		}
 		
-		sql_init = sql_init+"' AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
+		sql_init = sql_init+" AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
 		+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
 		
 		System.out.println(sql_init);
