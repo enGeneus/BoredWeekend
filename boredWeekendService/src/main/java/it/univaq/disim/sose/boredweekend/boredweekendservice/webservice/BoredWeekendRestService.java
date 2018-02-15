@@ -14,7 +14,6 @@ public class BoredWeekendRestService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendRestService.class);
 
-
 	@RequestMapping(value = "/getWeekends", method = RequestMethod.GET, headers="Accept=application/json")
 	public Weekend getWeekends() {
 		LOGGER.info("Received getWeekends request");

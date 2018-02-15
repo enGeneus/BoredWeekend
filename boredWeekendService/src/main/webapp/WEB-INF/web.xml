@@ -6,8 +6,15 @@
 
 	<display-name>Bored Weekend Service</display-name>
 
+<!-- 	<context-param> -->
+<!--         <param-name>contextConfigLocation</param-name> -->
+<!--         <param-value> -->
+<!--             /WEB-INF/spring/root-context.xml -->
+<!--         </param-value> -->
+<!--     </context-param> -->
+
 	<servlet>
-		<servlet-name>boredWeekendService</servlet-name>
+		<servlet-name>restservice</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -17,7 +24,11 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>boredWeekendService</servlet-name>
+		<servlet-name>restservice</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+
+<!-- 	<listener> -->
+<!-- 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
+<!-- 	</listener> -->
 </web-app>

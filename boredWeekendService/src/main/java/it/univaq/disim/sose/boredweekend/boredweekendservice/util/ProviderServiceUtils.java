@@ -1,20 +1,13 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.util;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class ProviderServiceUtils {
 
-	@Value("#{cfgproperties.wunderground_url}")
-	private static String wundergroundUrl;
+	private static final String WUNDERGROUND_URL = "http://api.wunderground.com/api/";
 
-	@Value("#{cfgproperties.wunderground_apikey}")
-	private static String wundergroundApiKey;
+	private static final String WUNDERGROUND_APIKEY = "f5d7b7ece3b0e77d";
 
-	private static String getWundergroundUrl() {
-		return wundergroundApiKey;
-	}
-
-	private static String getWundergroundApiKey() {
-		return wundergroundApiKey;
+	public static String buildWundergroundRequestURL(double lat, double lon) {
+		String url = WUNDERGROUND_URL + WUNDERGROUND_APIKEY + "/forecast/q/" + lat +","+ lon; 
+		return url;
 	}
 }
