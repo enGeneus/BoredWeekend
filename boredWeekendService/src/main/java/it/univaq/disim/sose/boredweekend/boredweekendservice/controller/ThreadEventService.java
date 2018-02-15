@@ -1,5 +1,6 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ class ThreadEventService extends Thread {
 	private List<String> city;
 	private Date start;
 	private Date end;
-	private List<Event> events;
+	private List<Event> events = new ArrayList<>();
 	
 	public ThreadEventService(List<String> city, Date start, Date end) {
 		this.city = city;

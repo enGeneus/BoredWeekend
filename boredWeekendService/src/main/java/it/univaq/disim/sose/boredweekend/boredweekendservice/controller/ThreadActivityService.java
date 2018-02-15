@@ -19,7 +19,7 @@ class ThreadActivityService extends Thread {
 	private List<String> category;
 	private List<String> day;
 	private String daytime;
-	private List<Activity> activity;
+	private List<Activity> activity = new ArrayList<>();
 	
 	public ThreadActivityService(List<String> city, List<String> category, List<String> day, String daytime) {
 		this.city = city;
