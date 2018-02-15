@@ -151,7 +151,7 @@ public class JDBCEventsDAO implements EventsDAO {
 		 */
 		
 		String sql_init0 = "SELECT a.*, c." + CATEGORY_COLUMN + " FROM " + EVENTS + " as a JOIN " + CATEGORY_TYPE
-				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE ";
+				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE (";
 		
 		for(String citys : city) {
 			if(city.size() == 1) {
@@ -169,7 +169,7 @@ public class JDBCEventsDAO implements EventsDAO {
 			 sql_init = sql_init0;
 		}
 		
-		sql_init = sql_init+" AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
+		sql_init = sql_init+") AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
 		+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
 		
 		System.out.println(sql_init);
