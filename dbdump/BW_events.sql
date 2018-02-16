@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Creato il: Feb 02, 2018 alle 18:11
+-- Creato il: Feb 16, 2018 alle 18:48
 -- Versione del server: 5.5.42
 -- Versione PHP: 5.6.10
 
@@ -30,9 +30,15 @@ CREATE TABLE `category_type` (
 --
 
 INSERT INTO `category_type` (`id_event`, `category`) VALUES
-(5, 'Culture'),
-(6, 'Culture'),
-(7, 'Culture');
+(13, 'LiveMusic'),
+(12, 'LiveMusic'),
+(8, 'LiveMusic'),
+(9, 'Culture'),
+(11, 'Culture'),
+(10, 'Culture'),
+(14, 'Sport'),
+(15, 'Sport'),
+(16, 'Culture');
 
 -- --------------------------------------------------------
 
@@ -53,20 +59,22 @@ CREATE TABLE `events` (
   `location_name` varchar(50) DEFAULT NULL,
   `img` binary(50) DEFAULT NULL,
   `payment` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `events`
 --
 
 INSERT INTO `events` (`id_event`, `info`, `address`, `city`, `name`, `date`, `start`, `end`, `description`, `location_name`, `img`, `payment`) VALUES
-(1, 'ciao', 'asp', 'Rome', 'asp', '2018-02-02', '2008-00-00 00:00:00', '2014-00-00 00:00:00', 'asdas', 'asdasd', NULL, 1),
-(2, 'pesca della trota', 'monvalico', 'Rome', 'trotata', '2018-02-07', '2018-02-07 08:00:00', '2018-02-07 14:00:00', 'trotata tra amici', 'val di trota', NULL, 0),
-(3, NULL, NULL, NULL, NULL, NULL, '2018-02-07 07:00:00', '2018-02-02 17:00:00', NULL, NULL, NULL, NULL),
-(4, NULL, NULL, 'LOndra', 'Trotata2.0', '2019-02-02', '2019-02-02 08:00:00', '2019-02-02 17:00:00', 'Beh , cè altro da dire?', 'trotaland', NULL, 1),
-(5, 'Seconda edizione della trotata maxima', 'Via dal trota 28', 'Rome', 'Trotata2.0', '2019-02-02', '2019-02-02 08:00:00', '2019-02-02 17:00:00', 'Beh , cè altro da dire?', 'trotaland', NULL, 1),
-(6, 'Seconda edizione della trotata maxima', 'Via dal trota 28', 'L''Ondra', 'Trotata2.0', '2019-02-02', '2019-02-02 08:00:00', '2019-02-02 17:00:00', 'Beh , c''è altro da dire?', 'trotaland', NULL, 1),
-(7, 'Seconda edizione della trotata maxima', 'Via dal trota 28', 'L''Ondra', 'Trotata 3.0', '2020-02-02', '2020-02-02 08:00:00', '2019-02-02 17:00:00', 'Beh , c''è altro da dire?', 'trotaland', NULL, 1);
+(8, 'Music Fest', 'Via Perbellini', 'L''Aquila', 'Music Fest', '2018-02-28', '2018-02-28 08:00:00', '2018-02-28 21:00:00', 'Music Festival', 'Via Perbellini', NULL, 0),
+(9, 'Exposition', 'Via Aragona', 'Rome', 'Picasso e le sue oprete', '2018-03-14', '2018-03-14 08:00:00', '2018-03-16 00:00:00', 'Exhibition of paintings', 'Il Museale', NULL, 1),
+(10, 'Biopark visit', 'Piazzale del Giardino Zoologico', 'Rome', 'Visita al Bioparco', '2018-03-04', '2018-03-04 12:00:00', '2018-03-04 21:00:00', 'Biopark visit', 'Bioparco di Roma', NULL, 1),
+(11, 'Vatican museums visit', 'Viale Vaticano', 'Rome', 'Vatican museums', '2018-04-01', '2018-04-01 10:00:00', '2018-04-01 21:00:00', 'Vatican museums visit', 'Musei Vaticani', NULL, 1),
+(12, 'Rock concert', 'Viale dei Gladiatori', 'Rome', 'Rock in Roma', '2018-03-10', '2018-03-10 18:00:00', '2018-03-11 05:00:00', 'Rock concert', 'Stadio Olimpico', NULL, 1),
+(13, 'indie Festival', 'Viale dei Gladiatori', 'Rome', 'Indie Festival', '2018-03-10', '2018-03-10 18:00:00', '2018-03-10 23:00:00', 'indie Festival', 'Indie Bar', NULL, 0),
+(14, 'Match Serie A', 'Via Filadelfia', 'Torino', '22° giornata serie A "Torino-Milan"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A "Juventus-Milan"', 'Stadio Olimpico Grande Torino', NULL, 1),
+(15, 'Match Serie A', 'Corso Gaetano Scirea', 'Torino', '22° giornata serie A "Juventus-Milan"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A "Juventus-Milan"', 'Juventus Stadium', NULL, 1),
+(16, 'Biopark visit "Animali della savana"', 'Piazzale del Giardino Zoologico', 'Rome', 'Visita al Bioparco - "Animali della savana"', '2018-03-04', '2018-03-04 12:00:00', '2018-03-04 21:00:00', 'Biopark visit "Animali della savana"', 'Bioparco di Roma', NULL, 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -92,7 +100,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT per la tabella `events`
 --
 ALTER TABLE `events`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- Limiti per le tabelle scaricate
 --
