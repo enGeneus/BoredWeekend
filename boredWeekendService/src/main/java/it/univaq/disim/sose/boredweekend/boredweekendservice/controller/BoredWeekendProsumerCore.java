@@ -28,7 +28,7 @@ public class BoredWeekendProsumerCore {
 	public Weekend buildWeekend(String city, Date startDate, Date endDate, List<String> preferences, String daytime, int distance) {
 		LOGGER.info("BoredWeekend is handling the getWeekends request in its core");
 
-		LOGGER.info("Retreiving city coordinates...");
+		LOGGER.info("Retreiving coordinates of city " + city);
 		double[] latlon = callMapsGeocodeService(city);
 
 		LOGGER.debug("Coordinates: " + latlon[0] + "," + latlon[1]);
@@ -41,12 +41,12 @@ public class BoredWeekendProsumerCore {
 		LOGGER.info("Retreiving nearby cities...");
 		List<String> nearbyCities = callGeoNamesService(latlon[0], latlon[1], distance);
 
-
 		for (String currentCity : nearbyCities) {
 			LOGGER.debug("Nearby City found: " + currentCity);
 		}
 
-		if (nearbyCities==null || nearbyCities.isEmpty()) {
+		if (nearbyCities==null || nearbyCities.isEmpty() || !nearbyCities.contains(city)) {
+			LOGGER.debug("Forced selected city into nerby list");
 			nearbyCities.add(city);
 		}
 
@@ -191,7 +191,7 @@ public class BoredWeekendProsumerCore {
 				JSONArray geonames = response.getJSONArray("geonames");
 				for (int i = 0; i < geonames.length(); i++) {
 					JSONObject name = geonames.getJSONObject(i);
-					nearbycities.add(name.getString("name"));
+					nearbycities.add(name.getString("name").replace("’", "'"));
 				}
 
 			}

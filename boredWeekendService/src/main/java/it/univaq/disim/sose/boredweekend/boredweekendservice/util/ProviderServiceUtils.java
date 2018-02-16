@@ -25,7 +25,7 @@ public class ProviderServiceUtils {
 
 	public static String buildGeoNamesURL(double lat, double lon, int radius) {
 		// EXAMPLE: http://api.geonames.org/findNearbyPlaceNameJSON?lat=42.3498479&lng=13.3995091&style=short&cities=1000&radius=40&maxRows=30&username=engeneus
-		String url = GEONAMES_BASEURL + "?lat=" + lat + "&lng=" + lon + "&radius=" + radius + "&username=" + GEONAMES_USERNAME;
+		String url = GEONAMES_BASEURL + "?lat=" + lat + "&lng=" + lon + "&radius=" + radius + "&maxRows=20&cities=cities5000&username=" + GEONAMES_USERNAME;
 		return url;
 	}
 }
