@@ -6,7 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Place;
@@ -86,18 +89,47 @@ public class BoredWeekendProsumerCore {
 		LOGGER.debug("Starting weekday: " + startWeekdayName);
 		LOGGER.debug("Ending weekday: " + endWeekdayName);
 
-		Weekend weekend = new Weekend();
-
 		LOGGER.debug(activities.size() + " Activities found");
-		for (Activity activity : activities) {
-			LOGGER.debug(activity.getName());
+		LOGGER.debug(events.size() + " Events found");
+
+		List<Date> dates = DataUtils.getDaysBetweenDates(startDate, endDate);
+
+		Map<String, Day> days = new HashMap<>();
+
+		// Create list of days
+		for (Date date : dates) {
+			LOGGER.debug("Creating new weekend day for " + date.toString());
+			Day day = new Day(date);
+			day.setWeatherForecast(forecast.getDayForecast(date));
+			days.put(DataUtils.getDateSimpleRepresentation(date), day);
 		}
 
-		LOGGER.debug(events.size() + " Events found");
+		// Filter activities and add to each day
+		for (Activity activity : activities) {
+			for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
+				Day day = dayEntry.getValue();
+				if (activity.isAvailable() && activity.getDays().contains(day.getDay()) && (!activity.getCategories().contains("Outdoors") || day.isGoodWeather())) {
+					LOGGER.debug("Adding activity " + activity.getName() + " to day " + day.getDay() + " " + day.getDayNumber());
+					day.getActivities().add(activity);
+				}
+			}
+		}
+
+		// Add events to each day
 		for (Event event : events) {
-			LOGGER.debug(event.getName());
+			List<Date> eventDays = DataUtils.getDaysBetweenDates(event.getStart(), event.getEnd());
+			for (Date eventDay : eventDays) {
+				String dayRepresentation = DataUtils.getDateSimpleRepresentation(eventDay);
+				if (days.containsKey(dayRepresentation)) {
+					days.get(dayRepresentation).getEvents().add(event);
+				}
+			}
 		}
 		
+		Weekend weekend = new Weekend();
+
+		weekend.getDays().addAll(days.values());
+
 		return weekend;
 	}
 
@@ -155,7 +187,7 @@ public class BoredWeekendProsumerCore {
 		List<String> nearbycities = new ArrayList<>();
 
 		try {
-			LOGGER.info("Calling maps geocode service");
+			LOGGER.info("Calling geonames service");
 			String geoNamesStringUrl = ProviderServiceUtils.buildGeoNamesURL(lat, lon, radius);
 
 			LOGGER.info("URL: " + geoNamesStringUrl);

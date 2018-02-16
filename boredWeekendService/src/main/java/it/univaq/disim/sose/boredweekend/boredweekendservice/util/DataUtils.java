@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -79,5 +80,25 @@ public class DataUtils {
 			}
 			return weekdays;
 		}
+	}
+
+
+	public static List<Date> getDaysBetweenDates(Date startDate, Date endDate) {
+	    List<Date> dates = new ArrayList<Date>();
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+
+	    while (calendar.getTime().before(endDate)) {
+	        Date result = calendar.getTime();
+	        dates.add(result);
+	        calendar.add(Calendar.DATE, 1);
+	    }
+	    dates.add(calendar.getTime());
+	    return dates;
+	}
+
+	public static String getDateSimpleRepresentation(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(date);
 	}
 }

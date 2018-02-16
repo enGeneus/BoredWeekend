@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -78,9 +79,9 @@ public class WundergroundServiceClient extends Thread {
 
 				for (int i=0; i<forecastDays.length(); i++) {
 					JSONObject forecastDay = forecastDays.getJSONObject(i);
-					int dayNumber = forecastDay.getJSONObject("date").getInt("day");
+					Date day = new Date(forecastDay.getJSONObject("date").getLong("epoch") * 1000);
 					String dayForecast = forecastDay.getString("conditions");
-					forecast.setDayForecast(dayNumber, dayForecast);
+					forecast.setDayForecast(day, dayForecast);
 				}
 
 				return forecast;

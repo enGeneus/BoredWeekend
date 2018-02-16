@@ -1,58 +1,30 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ForecastInfo {
 
-	private Map<Integer, String> dayForecastMap;
+	private Map<String, String> dayForecastMap;
+
+	private static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
 	public ForecastInfo() {
 		this.dayForecastMap = new HashMap<>();
 	}
 
-	public String getDayForecast(int dayNumber) {
-		return this.dayForecastMap.get(dayNumber);
+	public String getDayForecast(Date day) {
+		return this.dayForecastMap.get(DATEFORMAT.format(day));
 	}
 
-	public void setDayForecast(int dayNumber, String forecast) {
-		this.dayForecastMap.put(dayNumber, forecast);
+	public void setDayForecast(Date day, String forecast) {
+		String dayString = DATEFORMAT.format(day);
+		this.dayForecastMap.put(dayString, forecast);
 	}
 
-	public Map<Integer, String> getForecastMap() {
+	public Map<String, String> getForecastMap() {
 		return this.dayForecastMap;
-	}
-
-	public boolean isGoodWeather(int dayNumber) {
-		String forecast = this.dayForecastMap.get(dayNumber);
-
-		for (GoodWeatherValues c : GoodWeatherValues.values()) {
-			if(c.value().equals(forecast)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private enum GoodWeatherValues {
-		CLEAR("Clear"),
-		CLOUDY("Cloudy"),
-		HAZE("Haze"),
-		MOSTLY_CLOUDY("Mostly Cloudy"),
-		MOSTLY_SUNNY("Mostly Sunny"),
-		PARTLY_CLOUDY("Partly Cloudy"),
-		PARTLY_SUNNY("Partly Sunny"),
-		SUNNY("Sunny"),
-		SCATTERED_CLOUDS("Scattered Clouds");
-
-		private final String value;
-
-		GoodWeatherValues(String v) {
-			value = v;
-		}
-
-	    public String value() {
-	        return value;
-	    }
 	}
 }
