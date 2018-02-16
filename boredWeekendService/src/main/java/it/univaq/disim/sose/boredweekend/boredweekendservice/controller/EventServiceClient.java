@@ -11,14 +11,14 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventType;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsPT;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
-class ThreadEventService extends Thread {
+class EventServiceClient extends Thread {
 	
 	private List<String> city;
 	private Date start;
 	private Date end;
 	private List<Event> events = new ArrayList<>();
 	
-	public ThreadEventService(List<String> city, Date start, Date end) {
+	public EventServiceClient(List<String> city, Date start, Date end) {
 		this.city = city;
 		this.start = start;
 		this.end = end;
@@ -52,7 +52,7 @@ class ThreadEventService extends Thread {
 	}
 
 	public void run() {
-		
+
 		EventsService service = new EventsService();
 		EventsPT port = service.getEventsPort();
 		CityEventsRequest request = new CityEventsRequest();

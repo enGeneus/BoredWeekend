@@ -13,7 +13,7 @@ import it.univaq.disim.sose.boredweekend.providers.activitiesservice.CityActivit
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.Daytime;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.WeekDay;
 
-class ThreadActivityService extends Thread {
+class ActivityServiceClient extends Thread {
 	
 	private List<String> city;
 	private List<String> category;
@@ -21,7 +21,7 @@ class ThreadActivityService extends Thread {
 	private String daytime;
 	private List<Activity> activity = new ArrayList<>();
 	
-	public ThreadActivityService(List<String> city, List<String> category, List<String> day, String daytime) {
+	public ActivityServiceClient(List<String> city, List<String> category, List<String> day, String daytime) {
 		this.city = city;
 		this.category = category;
 		this.day = day;

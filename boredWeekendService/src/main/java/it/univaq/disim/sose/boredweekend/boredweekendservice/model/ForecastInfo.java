@@ -19,6 +19,10 @@ public class ForecastInfo {
 		this.dayForecastMap.put(dayNumber, forecast);
 	}
 
+	public Map<Integer, String> getForecastMap() {
+		return this.dayForecastMap;
+	}
+
 	public boolean isGoodWeather(int dayNumber) {
 		String forecast = this.dayForecastMap.get(dayNumber);
 
