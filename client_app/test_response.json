@@ -1,0 +1,113 @@
+{
+"days" : [ {
+  "weatherForecast" : null,
+  "events" : [ ],
+  "activities" : [ ],
+  "dayNumber" : "17",
+  "day" : "Saturday",
+  "monthNumber" : "02",
+  "month" : "February",
+  "goodWeather" : true
+}, {
+  "weatherForecast" : "Chance of Rain",
+  "events" : [ ],
+  "activities" : [ {
+    "id" : 0,
+    "name" : "Musei Vaticani",
+    "city" : "Rome",
+    "lat" : 0.0,
+    "lon" : 0.0,
+    "daytime" : "FullDay",
+    "info" : "Paintings and sculptures exposition.",
+    "payment" : true,
+    "img" : null,
+    "days" : [ "Monday", "Tuesday" ],
+    "categories" : [ "Family" ],
+    "available" : true
+  } ],
+  "dayNumber" : "19",
+  "day" : "Monday",
+  "monthNumber" : "02",
+  "month" : "February",
+  "goodWeather" : false
+}, {
+  "weatherForecast" : "Partly Cloudy",
+  "events" : [ ],
+  "activities" : [ {
+    "id" : 0,
+    "name" : "Colosseo",
+    "city" : "Rome",
+    "lat" : 0.0,
+    "lon" : 0.0,
+    "daytime" : "FullDay",
+    "info" : "Colosseum guide tour",
+    "payment" : true,
+    "img" : null,
+    "days" : [ "Tuesday", "Wednesday", "Sunday" ],
+    "categories" : [ "Family" ],
+    "available" : true
+  } ],
+  "dayNumber" : "18",
+  "day" : "Sunday",
+  "monthNumber" : "02",
+  "month" : "February",
+  "goodWeather" : true
+}, {
+  "weatherForecast" : "Partly Cloudy",
+  "events" : [ ],
+  "activities" : [ {
+    "id" : 0,
+    "name" : "Musei Vaticani",
+    "city" : "Rome",
+    "lat" : 0.0,
+    "lon" : 0.0,
+    "daytime" : "FullDay",
+    "info" : "Paintings and sculptures exposition.",
+    "payment" : true,
+    "img" : null,
+    "days" : [ "Monday", "Tuesday" ],
+    "categories" : [ "Family" ],
+    "available" : true
+  }, {
+    "id" : 0,
+    "name" : "Colosseo",
+    "city" : "Rome",
+    "lat" : 0.0,
+    "lon" : 0.0,
+    "daytime" : "FullDay",
+    "info" : "Colosseum guide tour",
+    "payment" : true,
+    "img" : null,
+    "days" : [ "Tuesday", "Wednesday", "Sunday" ],
+    "categories" : [ "Family" ],
+    "available" : true
+  } ],
+  "dayNumber" : "20",
+  "day" : "Tuesday",
+  "monthNumber" : "02",
+  "month" : "February",
+  "goodWeather" : true
+}, {
+  "weatherForecast" : "Mostly Cloudy",
+  "events" : [ ],
+  "activities" : [ {
+    "id" : 0,
+    "name" : "Colosseo",
+    "city" : "Rome",
+    "lat" : 0.0,
+    "lon" : 0.0,
+    "daytime" : "FullDay",
+    "info" : "Colosseum guide tour",
+    "payment" : true,
+    "img" : null,
+    "days" : [ "Tuesday", "Wednesday", "Sunday" ],
+    "categories" : [ "Family" ],
+    "available" : true
+  } ],
+  "dayNumber" : "21",
+  "day" : "Wednesday",
+  "monthNumber" : "02",
+  "month" : "February",
+  "goodWeather" : true
+} ]
+}

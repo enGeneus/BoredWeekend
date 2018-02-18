@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>BoredWeekend</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="assets/images/icons/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/contact3.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/structure.css"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/boredweekend.css"/>
+</head>
+<body>
+
+  <div id="body-wrapper">
+  </div>
+
+	<div id="form" class="bg-contact3">
+		<div class="container-contact3">
+			<div class="wrap-contact3">
+				<form class="contact3-form validate-form boredweekend">
+					<span class="contact3-form-title">
+						BoredWeekend
+					</span>
+
+					<div class="wrap-input3 validate-input" data-validate="City is required">
+						<input id="input-city" class="input3" type="text" name="city" placeholder="City">
+						<span class="focus-input3"></span>
+					</div>
+
+          <div class="input-daterange wrap-input3" id="datepicker">
+            <div class="row">
+              <div class="col-md-2">
+                <span>&nbsp;From</span>
+              </div>
+              <div class="col-md-4">
+                <input id="input-startdate" type="text" class="input3" name="start" placeholder="Start Date" />
+              </div>
+              <div class="col-md-2">
+                <span>To</span>
+              </div>
+              <div class="col-md-4">
+                <input id="input-enddate" type="text" class="input3" name="end" placeholder="End Date" />
+              </div>
+            </div>
+          </div>
+
+					<div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-nearby" class="selection-2" name="traveldistance">
+								<option selected disabled>Search also in nearby cities</option>
+								<option value="0">No</option>
+								<option value="10">Into 10km</option>
+								<option value="20">Into 20km</option>
+								<option value="50">Into 50km</option>
+								<option value="100">Into 100km</option>
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+
+          <div class="wrap-input3">
+						<span>&nbsp;Select activity categories</span>
+            <div id="categories" class="categories">
+              <button class="btn category-filter">Outdoor</button>
+              <button class="btn category-filter">Sport</button>
+              <button class="btn category-filter">Family</button>
+              <button class="btn category-filter">CityLife</button>
+              <button class="btn category-filter">Culture</button>
+              <button class="btn category-filter">Nature</button>
+            </div>
+					</div>
+
+					<div class="container-contact3-form-btn">
+						<button class="submit">
+							Go for the weekend!
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<section id="results" class="hidden">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-sm-12 col-md-6 col-lg-6 element_container">
+					<!-- Day of weekend -->
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<div id="element_content" class="single_stuff element_content hidden">
+		<div class="single_stuff_img">
+			<a href="single_page.html"><img src="assets/images/stuff_img1.jpg" alt="img"></a>
+		</div>
+		<div class="single_stuff_article">
+				<div class="single_sarticle_inner">
+						<a class="stuff_category" href="#">Luogo</a>
+					<div class="stuff_article_inner">
+						<span class="stuff_date">Month <strong>00</strong></span>
+						<h2><a href="single_page.html">Nome</a></h2>
+						<p>Descrizione</p>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div id="day-wrapper" class="leftbar_content hidden">
+		<h2>Intestazione giorno</h2>
+		<!-- Events and activities -->
+	</div>
+
+	<div id="dropDownSelect1"></div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+  <script src="assets/js/main.js"></script>
+
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+
+	<script type="text/javascript">
+	$('.input-daterange').datepicker({
+		orientation: "top auto",
+		todayHighlight: true,
+		 format: "yyyy-mm-dd",
+		toggleActive: true
+	});
+	</script>
+
+</body>
+</html>

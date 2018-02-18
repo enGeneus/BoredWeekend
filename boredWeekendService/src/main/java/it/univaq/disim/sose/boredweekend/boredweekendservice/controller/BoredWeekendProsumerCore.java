@@ -19,7 +19,6 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Place;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServiceUtils;
@@ -76,12 +75,12 @@ public class BoredWeekendProsumerCore {
 		List<Activity> activities = activityService.getActivity();
 		List<Event> events = eventService.getEvents();
 
-		Weekend weekend = composeData(activities, events, new ArrayList<>(), forecast, startDate, endDate);
+		Weekend weekend = composeData(activities, events, forecast, startDate, endDate);
 		return weekend;
 	}
 
 
-	private Weekend composeData(List<Activity> activities, List<Event> events, List<Place> places, ForecastInfo forecast, Date startDate, Date endDate) {
+	private Weekend composeData(List<Activity> activities, List<Event> events, ForecastInfo forecast, Date startDate, Date endDate) {
 
 		String startWeekdayName = DataUtils.getWeekdayName(startDate);
 		String endWeekdayName = DataUtils.getWeekdayName(endDate);
