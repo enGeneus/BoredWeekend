@@ -2,7 +2,7 @@
 (function ($) {
   "use strict";
 
-  var bwBaseURL = "/getWeekends.php";
+  var bwBaseURL = "getWeekends.php";
   var categories = ['Outdoor', 'Sport', 'Family', 'CityLife', 'Culture', 'Nature'];
   var selectedCategories = [];
 
