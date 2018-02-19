@@ -43,6 +43,23 @@ button.category-filter.active {
   background-color: #dddddd;
 }
 
+button.days-filter {
+  margin: 5px;
+  height: 35px;
+  line-height: 0.2;
+  color: #555555;
+  background-color: white;
+  border-radius: 2px;
+}
+
+button.days-filter:hover {
+  background-color: #efefef;
+}
+
+button.days-filter.active {
+  background-color: #dddddd;
+}
+
 button.submit {
   display: block;
   margin-left: auto;

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
 
@@ -53,5 +54,11 @@ public class BoredWeekendRestService {
 
 		return weekend;
 	}
-
+	
+	@RequestMapping(value = "/insertActivity", method = RequestMethod.POST, headers = "Accept=application/json")
+	public void insert(Activity activity) {
+		
+		LOGGER.debug(activity.getName());
+	}
+	
 }

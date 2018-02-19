@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>BoredWeekend</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="assets/images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"/>
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/contact3.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/structure.css"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/boredweekend.css"/>
+</head>
+<body>
+
+  <div id="body-wrapper">
+  </div>
+
+	<div id="form" class="bg-contact3">
+		<div class="container-contact3">
+			<div class="wrap-contact3">
+				<form class="contact3-form validate-form boredweekend">
+					<span class="contact3-form-title">
+						Insert Activity
+					</span>
+					
+					<div class="wrap-input3 validate-input" data-validate="Name is required">
+						<input id="input-name" class="input3" type="text" name="name" placeholder="Name">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="City is required">
+						<input id="input-city" class="input3" type="text" name="city" placeholder="City">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-day_time" class="selection-2" name="daytime">
+								<option selected disabled>Select day time</option>
+								<option value="Morning">Morning</option>
+								<option value="Afternoon">Afternoon</option>
+								<option value="Daylight">Day light</option>
+								<option value="Night">Night</option>
+								<option value="FullDay">Full day</option>
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="Insert informations">
+						<textarea id="input-info" class="input3" name="info" placeholder="info"></textarea>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-payement" class="selection-2" name="payment">
+								<option selected disabled>Paid activity?</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3">
+						<span>&nbsp;Set activity categories</span>
+			            <div id="categories" class="categories">
+			              <button class="btn category-filter">Outdoor</button>
+			              <button class="btn category-filter">Sport</button>
+			              <button class="btn category-filter">Family</button>
+			              <button class="btn category-filter">CityLife</button>
+			              <button class="btn category-filter">Culture</button>
+			              <button class="btn category-filter">Nature</button>
+			            </div>
+					</div>
+					
+					<div class="wrap-input3">
+						<span>&nbsp;Select activity days</span>
+			            <div id="days" class="days">
+			              <button class="btn days-filter">Monday</button>
+			              <button class="btn days-filter">Tuesday</button>
+			              <button class="btn days-filter">Wednesday</button>
+			              <button class="btn days-filter">Thursday</button>
+			              <button class="btn days-filter">Friday</button>
+			              <button class="btn days-filter">Saturday</button>
+			              <button class="btn days-filter">Sunday</button>  
+			            </div>
+					</div>
+	
+					<div class="container-contact3-form-btn">
+						<button class="submit">
+							Insert Activity
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="dropDownSelect1"></div>
+
+  	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+  	<script src="assets/js/insertActivity.js"></script>
+
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+
+	<script type="text/javascript">
+	$('.input-daterange').datepicker({
+		orientation: "top auto",
+		todayHighlight: true,
+		 format: "yyyy-mm-dd",
+		toggleActive: true
+	});
+	</script>
+
+</body>
+</html>
