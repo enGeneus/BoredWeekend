@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.GoogleMapsGeocodeServiceClient;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.InsertActivity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
@@ -57,8 +59,41 @@ public class BoredWeekendRestService {
 	
 	@RequestMapping(value = "/insertActivity", method = RequestMethod.POST, headers = "Accept=application/json")
 	public void insert(Activity activity) {
+		/*
+		System.out.println("city: "+activity.getCity());
+		System.out.println("daytime: "+activity.getDaytime());
+		System.out.println("img: "+activity.getImg());
+		System.out.println("info: "+activity.getInfo());
+		System.out.println("lat: "+activity.getLat());
+		System.out.println("lon: "+activity.getLon());
+		System.out.println("payment: "+activity.isPayment());
+
+		System.out.println("categories: ");
+
+
+		for (String a : activity.getCategories()) {
+			System.out.println(a);
+		}
 		
-		LOGGER.debug(activity.getName());
+		System.out.println("days: ");
+
+		for (String a : activity.getDays()) {
+			System.out.println(a);
+		}
+		*/
+
+
+
+
+
+
+		
+		double[] latLon = GoogleMapsGeocodeServiceClient.callService(activity.getName());
+		activity.setLat(latLon[0]);
+		activity.setLat(latLon[1]);
+		InsertActivity newactivity = new InsertActivity(activity);
+		newactivity.addActivity();
+		
 	}
 	
 }

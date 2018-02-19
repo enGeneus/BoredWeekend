@@ -1,7 +1,7 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
 
-import java.util.List;
 
+import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesPT;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesService;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivityCategory;
@@ -15,26 +15,26 @@ public class InsertActivity {
 	
 	private ActivityType activityType = new ActivityType();
 	
-	public InsertActivity(String name, String city, double lat, double lon, String daytime, boolean state, String info, boolean payment, String img, List<String> categories, List<String> days) {
+	public InsertActivity(Activity activity) {
 	
-		this.activityType.setName(name);
-		this.activityType.setInfo(info);
-		this.activityType.setCity(city);
-		this.activityType.setPayment(payment);
-		this.activityType.setState(state);
-		this.activityType.setImg(img);
-		this.activityType.setDaytime(Daytime.fromValue(daytime));
+		this.activityType.setName(activity.getName());
+		this.activityType.setInfo(activity.getInfo());
+		this.activityType.setCity(activity.getCity());
+		this.activityType.setPayment(activity.isPayment());
+		this.activityType.setState(true);
+		this.activityType.setImg(activity.getImg());
+		this.activityType.setDaytime(Daytime.fromValue(activity.getDaytime()));
 		
 		Position position = new Position();
-		position.setLatitude(lat);
-		position.setLongitude(lon);
+		position.setLatitude(activity.getLat());
+		position.setLongitude(activity.getLon());
 		this.activityType.setPosition(position);
 
-		for (String category : categories) {
+		for (String category : activity.getCategories()) {
 			this.activityType.getCategory().add(ActivityCategory.fromValue(category));
 		}
 
-		for (String weekDay : days) {
+		for (String weekDay : activity.getDays()) {
 			this.activityType.getDays().add(WeekDay.fromValue(weekDay));
 		}
 		

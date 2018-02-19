@@ -49,7 +49,7 @@
     var nameValue = $("#input-name").val();
     var daytimeValue = $("#input-day_time").val();
     var infoValue = $("#input-info").val();
-    var payValue = $("#input-payement").val();
+    var payValue = $("#input-payment").val();
     
     var preferences;
     if (selectedCategories.length == 0) {
@@ -74,8 +74,8 @@
     	  	"name":nameValue,
         "daytime": daytimeValue,
         "info": infoValue,
-        "pay": payValue,
-        "preferences": preferences.toString(),
+        "payment": payValue,
+        "categories": preferences.toString(),
         "days": preferences_days.toString()
       },
 
