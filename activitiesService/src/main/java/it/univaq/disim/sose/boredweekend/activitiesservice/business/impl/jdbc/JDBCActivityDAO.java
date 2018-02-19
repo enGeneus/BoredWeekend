@@ -314,7 +314,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 					activity.setName(rs.getString(NAME_COLUMN));
 					activity.setCity(rs.getString(CITY_COLUMN));
 					activity.setLat(rs.getLong(LAT_COLUMN));
-					activity.setLat(rs.getLong(LON_COLUMN));
+					activity.setLon(rs.getLong(LON_COLUMN));
 					activity.setDaytime(rs.getString(DAYTIME_COLUMN));
 					activity.setState(rs.getBoolean(STATE_COLUMN));
 					activity.setInfo(rs.getString(INFO_COLUMN));

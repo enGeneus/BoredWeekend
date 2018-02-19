@@ -40,14 +40,13 @@ class ActivityServiceClient extends Thread {
 			
 			returningActivity.setName(activity.getName());
 			returningActivity.setInfo(activity.getInfo());
-			returningActivity.setInfo(activity.getInfo());
 			returningActivity.setCity(activity.getCity());
 			returningActivity.setPayment(activity.isPayment());
 			returningActivity.setState(activity.isState());
 			returningActivity.setImg(activity.getImg());
 			returningActivity.setDaytime(activity.getDaytime().value());
 			returningActivity.setLat(activity.getPosition().getLatitude());
-			returningActivity.setLat(activity.getPosition().getLongitude());
+			returningActivity.setLon(activity.getPosition().getLongitude());
 
 			List<String> categories = new ArrayList<>();
 
