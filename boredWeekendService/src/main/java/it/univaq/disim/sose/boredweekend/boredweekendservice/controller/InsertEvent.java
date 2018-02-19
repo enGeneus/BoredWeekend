@@ -1,7 +1,7 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
 
-import java.util.Date;
 
+import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.AddEventRequest;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventCategory;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventType;
@@ -12,19 +12,19 @@ public class InsertEvent {
 	
 	private EventType eventType = new EventType();
 	
-	public InsertEvent(String address, String city, String category, String description, Date end, Date start, String info, String img, String location, String name, boolean payment) {
+	public InsertEvent(Event event) {
 		
-		this.eventType.setAddress(address);
-		this.eventType.setCity(city);
-		this.eventType.setCategory(EventCategory.fromValue(category));
-		this.eventType.setDescription(description);
-		this.eventType.setEnd(end);
-		this.eventType.setInfo(info);
-		this.eventType.setImg(img);
-		this.eventType.setLocationName(location);
-		this.eventType.setName(name);
-		this.eventType.setPayment(payment);
-		this.eventType.setStart(start);
+		this.eventType.setAddress(event.getAddress());
+		this.eventType.setCity(event.getCity());
+		this.eventType.setCategory(EventCategory.fromValue(event.getCategories()));
+		this.eventType.setDescription(event.getDescription());
+		this.eventType.setEnd(event.getEnd());
+		this.eventType.setInfo(event.getInfo());
+		this.eventType.setImg(event.getImg());
+		this.eventType.setLocationName(event.getLocationName());
+		this.eventType.setName(event.getName());
+		this.eventType.setPayment(event.isPayment());
+		this.eventType.setStart(event.getStart());
 		
 	}
 	
