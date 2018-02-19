@@ -1,17 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Creato il: Feb 16, 2018 alle 18:48
--- Versione del server: 5.5.42
--- Versione PHP: 5.6.10
+-- Host: 127.0.0.1:3306
+-- Creato il: Feb 19, 2018 alle 12:07
+-- Versione del server: 5.7.19
+-- Versione PHP: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `BW_events`
+-- Database: `bw_events`
 --
 
 -- --------------------------------------------------------
@@ -20,9 +28,11 @@ SET time_zone = "+00:00";
 -- Struttura della tabella `category_type`
 --
 
-CREATE TABLE `category_type` (
+DROP TABLE IF EXISTS `category_type`;
+CREATE TABLE IF NOT EXISTS `category_type` (
   `id_event` int(11) NOT NULL,
-  `category` varchar(50) DEFAULT NULL
+  `category` varchar(50) DEFAULT NULL,
+  KEY `id_event` (`id_event`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -46,8 +56,9 @@ INSERT INTO `category_type` (`id_event`, `category`) VALUES
 -- Struttura della tabella `events`
 --
 
-CREATE TABLE `events` (
-  `id_event` int(11) NOT NULL,
+DROP TABLE IF EXISTS `events`;
+CREATE TABLE IF NOT EXISTS `events` (
+  `id_event` int(11) NOT NULL AUTO_INCREMENT,
   `info` text,
   `address` varchar(50) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
@@ -57,8 +68,9 @@ CREATE TABLE `events` (
   `end` datetime DEFAULT NULL,
   `description` text,
   `location_name` varchar(50) DEFAULT NULL,
-  `img` binary(50) DEFAULT NULL,
-  `payment` tinyint(1) DEFAULT NULL
+  `img` varchar(100) DEFAULT NULL,
+  `payment` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id_event`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
@@ -66,41 +78,16 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id_event`, `info`, `address`, `city`, `name`, `date`, `start`, `end`, `description`, `location_name`, `img`, `payment`) VALUES
-(8, 'Music Fest', 'Via Perbellini', 'L''Aquila', 'Music Fest', '2018-02-28', '2018-02-28 08:00:00', '2018-02-28 21:00:00', 'Music Festival', 'Via Perbellini', NULL, 0),
+(8, 'Music Fest', 'Via Perbellini', 'L\'Aquila', 'Music Fest', '2018-02-28', '2018-02-28 08:00:00', '2018-02-28 21:00:00', 'Music Festival', 'Via Perbellini', NULL, 0),
 (9, 'Exposition', 'Via Aragona', 'Rome', 'Picasso e le sue oprete', '2018-03-14', '2018-03-14 08:00:00', '2018-03-16 00:00:00', 'Exhibition of paintings', 'Il Museale', NULL, 1),
 (10, 'Biopark visit', 'Piazzale del Giardino Zoologico', 'Rome', 'Visita al Bioparco', '2018-03-04', '2018-03-04 12:00:00', '2018-03-04 21:00:00', 'Biopark visit', 'Bioparco di Roma', NULL, 1),
 (11, 'Vatican museums visit', 'Viale Vaticano', 'Rome', 'Vatican museums', '2018-04-01', '2018-04-01 10:00:00', '2018-04-01 21:00:00', 'Vatican museums visit', 'Musei Vaticani', NULL, 1),
 (12, 'Rock concert', 'Viale dei Gladiatori', 'Rome', 'Rock in Roma', '2018-03-10', '2018-03-10 18:00:00', '2018-03-11 05:00:00', 'Rock concert', 'Stadio Olimpico', NULL, 1),
 (13, 'indie Festival', 'Viale dei Gladiatori', 'Rome', 'Indie Festival', '2018-03-10', '2018-03-10 18:00:00', '2018-03-10 23:00:00', 'indie Festival', 'Indie Bar', NULL, 0),
-(14, 'Match Serie A', 'Via Filadelfia', 'Torino', '22° giornata serie A "Torino-Milan"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A "Juventus-Milan"', 'Stadio Olimpico Grande Torino', NULL, 1),
-(15, 'Match Serie A', 'Corso Gaetano Scirea', 'Torino', '22° giornata serie A "Juventus-Milan"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A "Juventus-Milan"', 'Juventus Stadium', NULL, 1),
-(16, 'Biopark visit "Animali della savana"', 'Piazzale del Giardino Zoologico', 'Rome', 'Visita al Bioparco - "Animali della savana"', '2018-03-04', '2018-03-04 12:00:00', '2018-03-04 21:00:00', 'Biopark visit "Animali della savana"', 'Bioparco di Roma', NULL, 1);
+(14, 'Match Serie A', 'Via Filadelfia', 'Torino', '22° giornata serie A \"Torino-Milan\"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A \"Juventus-Milan\"', 'Stadio Olimpico Grande Torino', NULL, 1),
+(15, 'Match Serie A', 'Corso Gaetano Scirea', 'Torino', '22° giornata serie A \"Juventus-Milan\"', '2018-02-25', '2018-02-25 15:00:00', '2018-02-25 18:00:00', '22° giornata serie A \"Juventus-Milan\"', 'Juventus Stadium', NULL, 1),
+(16, 'Biopark visit \"Animali della savana\"', 'Piazzale del Giardino Zoologico', 'Rome', 'Visita al Bioparco - \"Animali della savana\"', '2018-03-04', '2018-03-04 12:00:00', '2018-03-04 21:00:00', 'Biopark visit \"Animali della savana\"', 'Bioparco di Roma', NULL, 1);
 
---
--- Indici per le tabelle scaricate
---
-
---
--- Indici per le tabelle `category_type`
---
-ALTER TABLE `category_type`
-  ADD KEY `id_event` (`id_event`);
-
---
--- Indici per le tabelle `events`
---
-ALTER TABLE `events`
-  ADD PRIMARY KEY (`id_event`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
-
---
--- AUTO_INCREMENT per la tabella `events`
---
-ALTER TABLE `events`
-  MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -110,3 +97,8 @@ ALTER TABLE `events`
 --
 ALTER TABLE `category_type`
   ADD CONSTRAINT `category_type_ibfk_1` FOREIGN KEY (`id_event`) REFERENCES `events` (`id_event`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

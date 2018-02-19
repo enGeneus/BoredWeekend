@@ -47,7 +47,7 @@
 					<xsd:element name="end" type="xsd:dateTime" />
 					<xsd:element name="description" type="xsd:string" />
 					<xsd:element name="location_name" type="xsd:string" />
-					<xsd:element name="img" type="xsd:base64Binary" />
+					<xsd:element name="img" type="xsd:string" />
 					<xsd:element name="payment" type="xsd:boolean" />
 				</xsd:sequence>
 			</xsd:complexType>

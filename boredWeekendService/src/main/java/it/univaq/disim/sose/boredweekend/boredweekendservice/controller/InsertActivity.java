@@ -15,7 +15,7 @@ public class InsertActivity {
 	
 	private ActivityType activityType = new ActivityType();
 	
-	public InsertActivity(String name, String city, double lat, double lon, String daytime, boolean state, String info, boolean payment, byte[] img, List<String> categories, List<String> days) {
+	public InsertActivity(String name, String city, double lat, double lon, String daytime, boolean state, String info, boolean payment, String img, List<String> categories, List<String> days) {
 	
 		this.activityType.setName(name);
 		this.activityType.setInfo(info);

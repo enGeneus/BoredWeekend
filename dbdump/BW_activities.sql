@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Feb 16, 2018 alle 18:07
+-- Creato il: Feb 19, 2018 alle 12:06
 -- Versione del server: 5.7.19
 -- Versione PHP: 5.6.31
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `activities` (
   `state` tinyint(1) NOT NULL,
   `info` text NOT NULL,
   `payment` tinyint(1) NOT NULL,
-  `img` binary(50) DEFAULT NULL,
+  `img` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_activity`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 

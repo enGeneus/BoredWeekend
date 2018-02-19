@@ -175,7 +175,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 				activity.setState(rs.getBoolean(STATE_COLUMN));
 				activity.setInfo(rs.getString(INFO_COLUMN));
 				activity.setPayment(rs.getBoolean(PAYMENT_COLUMN));
-				activity.setImg(rs.getBytes(IMG_COLUMN));
+				activity.setImg(rs.getString(IMG_COLUMN));
 
 			}
 			
@@ -319,7 +319,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 					activity.setState(rs.getBoolean(STATE_COLUMN));
 					activity.setInfo(rs.getString(INFO_COLUMN));
 					activity.setPayment(rs.getBoolean(PAYMENT_COLUMN));
-					activity.setImg(rs.getBytes(IMG_COLUMN));
+					activity.setImg(rs.getString(IMG_COLUMN));
 					activity.setDays(day_list);
 					activity.setCategories(category_list);
 					activityMap.put(rs.getInt(ID_COLUMN), activity);

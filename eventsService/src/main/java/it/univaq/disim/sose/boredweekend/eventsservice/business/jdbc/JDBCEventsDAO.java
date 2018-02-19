@@ -56,12 +56,12 @@ public class JDBCEventsDAO implements EventsDAO {
 
 		String query = "INSERT INTO `" + EVENTS + "`(`" + NAME_COLUMN + "`,`" + INFO_COLUMN + "`,`" + ADDRESS_COLUMN
 				+ "`, `" + CITY_COLUMN + "`, `" + DATE_COLUMN + "`, `" + START_COLUMN + "`, `" + END_COLUMN + "`, `"
-				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`)"
+				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`, `" + IMG_COLUMN + "`)"
 				+ " VALUES ('" + event.getName().replace("'", "\\'") + "','" + event.getInfo().replace("'", "\\'")
 				+ "','" + event.getAddress().replace("'", "\\'") + "','" + event.getCity().replace("'", "\\'") + "','"
 				+ "2018-10-10"+"','" + Utility.date2Mysql(event.getStart()) + "','" + Utility.date2Mysql(event.getEnd()) + "',"
 				+ event.isPayment() + "," + event.getImg() + ",'" + event.getLocationName().replace("'", "\\'") + "','"
-				+ event.getDescription().replace("'", "\\'") + "')";
+				+ event.getDescription().replace("'", "\\'") + "','" + event.getImg().replace("'", "\\'") + "')";
 
 		// dobbiamo fare i controlli sulle caratteristiche dell'evento?
 
@@ -229,7 +229,7 @@ public class JDBCEventsDAO implements EventsDAO {
 					event.setStart(rs.getDate(START_COLUMN));
 					event.setEnd(rs.getDate(END_COLUMN));
 					event.setPayment(rs.getBoolean(PAYMENT_COLUMN));
-					event.setImg(rs.getBytes(IMG_COLUMN));
+					event.setImg(rs.getString(IMG_COLUMN));
 					event.setDescription(rs.getString(DESCRIPTION_COLUMN));
 					event.setLocationName(rs.getString(LOCATION_COLUMN));
 					event.setAddress(rs.getString(ADDRESS_COLUMN));

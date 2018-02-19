@@ -12,7 +12,7 @@ public class InsertEvent {
 	
 	private EventType eventType = new EventType();
 	
-	public InsertEvent(String address, String city, String category, String description, Date end, Date start, String info, byte[] img, String location, String name, boolean payment) {
+	public InsertEvent(String address, String city, String category, String description, Date end, Date start, String info, String img, String location, String name, boolean payment) {
 		
 		this.eventType.setAddress(address);
 		this.eventType.setCity(city);

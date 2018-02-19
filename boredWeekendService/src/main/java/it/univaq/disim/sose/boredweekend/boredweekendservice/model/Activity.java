@@ -14,7 +14,7 @@ public class Activity {
 	private boolean state;
 	private String info;
 	private boolean payment;
-	private byte[] img;
+	private String img;
 
 	List<String> days;
 	List<String> categories;
@@ -96,11 +96,11 @@ public class Activity {
 		this.payment = payment;
 	}
 
-	public byte[] getImg() {
+	public String getImg() {
 		return img;
 	}
 
-	public void setImg(byte[] img) {
+	public void setImg(String img) {
 		this.img = img;
 	}
 

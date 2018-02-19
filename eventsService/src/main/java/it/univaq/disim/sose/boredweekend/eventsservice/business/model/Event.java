@@ -13,7 +13,7 @@ public class Event {
 	private Date end;
 	private String description;
 	private String locationName;
-	private byte[] img;
+	private String img;
 	private boolean payment;
 
 	String category;
@@ -60,10 +60,10 @@ public class Event {
 	public void setLocationName(String location_name) {
 		this.locationName = location_name;
 	}
-	public byte[] getImg() {
+	public String getImg() {
 		return img;
 	}
-	public void setImg(byte[] img) {
+	public void setImg(String img) {
 		this.img = img;
 	}
 	public boolean isPayment() {
