@@ -2,14 +2,14 @@
 (function ($) {
   "use strict";
 
-  var bwBaseURL = "/insertEvent.php";
+  var bwBaseURL = "insertEvent.php";
 
 
   $("button.submit").click(function(e){
     e.preventDefault();
-    
-    var cityValue = $("#input-city").val();
+
     var nameValue = $("#input-name").val();
+    var cityValue = $("#input-city").val();
     var categoryValue = $("#input-category").val();
     var locationNameValue = $("#input-locationName").val();
     
@@ -19,13 +19,33 @@
     var endDateValue = $("#input-enddate").val();
     var endTimeValue = $("#input-endtime").val();
     
+    var startValue = startDateValue.concat("T", startTimeValue, ":00");
+    var endValue = endDateValue.concat("T", endTimeValue, ":00");
+    
+    var start = new Date(startValue);
+    var end = new Date(endValue);
+    
+    
     var addressValue = $("#input-address").val();
     var infoValue = $("#input-info").val();
     var payValue = $("#input-payment").val();
     var descriptionValue = $("#input-description").val();
-    var imgValue = $("#input-img").val;
-
-
+    var imgValue = $("#input-img").val();
+    
+    
+    
+    console.log(nameValue);
+    console.log(cityValue);
+    console.log(categoryValue);
+    console.log(locationNameValue);
+    console.log(startValue);
+    console.log(endValue);
+    console.log(addressValue);
+    console.log(infoValue);
+    console.log(payValue);
+    console.log(descriptionValue);
+    console.log(imgValue);
+    
     $.ajax(bwBaseURL, {
       method: "POST",
       dataType: "json",
@@ -35,13 +55,12 @@
     	  	"address":addressValue,
     	  	"category":categoryValue,
     	  	"locationName":locationNameValue,
-    	  	"start":startDateValue+" "+startTimeValue+":00",
-    	  	"end":endtDateValue+" "+endTimeValue+":00",
+    	  	"start":start,
+    	  	"end":end,
     	  	"description":descriptionValue,
         "info": infoValue,
         "payment": payValue,
         "img":imgValue
-        
       },
 
       success: function(response) {
