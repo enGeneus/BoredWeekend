@@ -58,10 +58,10 @@ public class JDBCActivityDAO implements ActivityDAO {
 	public void insert(Activity activity) {
 
 		String query = "INSERT INTO `"+ACTIVITIES+"`(`"+NAME_COLUMN+"`, `"+CITY_COLUMN+"`, `"+LAT_COLUMN+"`, `"+LON_COLUMN+"`, `"+DAYTIME_COLUMN+"`, `"+STATE_COLUMN+"`, `"+INFO_COLUMN+"`, `"+PAYMENT_COLUMN+"`, `"+IMG_COLUMN+"`)"
-				+ " VALUES ('"+activity.getName().replace("'", "\\'")+"','"+activity.getCity().replace("'", "\\'")+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isAvailable()+",'"+activity.getInfo().replace("'", "\\'")+"',"+activity.isPayment()+","+activity.getImg()+")";		
+				+ " VALUES ('"+activity.getName().replace("'", "\\'")+"','"+activity.getCity().replace("'", "\\'")+"',"+activity.getLat()+","+activity.getLon()+",'"+activity.getDaytime()+"',"+activity.isAvailable()+",'"+activity.getInfo().replace("'", "\\'")+"',"+activity.isPayment()+",'"+activity.getImg()+"')";		
 		
 		// dobbiamo fare i controlli sulle caratteristiche dell'attività?
-		
+
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
