@@ -75,9 +75,9 @@
     	  	"name":nameValue,
         "daytime": daytimeValue,
         "info": infoValue,
-        "payment": payValue,
-        "categories": preferences.toString(),
-        "days": preferences_days.toString(),
+        "payment": payValue=='1' ? true : false,
+        "categories": preferences,
+        "days": preferences_days,
         "img": imgValue
       },
 

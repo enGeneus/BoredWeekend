@@ -22,10 +22,6 @@
     var startValue = startDateValue.concat("T", startTimeValue, ":00");
     var endValue = endDateValue.concat("T", endTimeValue, ":00");
     
-    var start = new Date(startValue);
-    var end = new Date(endValue);
-    
-    
     var addressValue = $("#input-address").val();
     var infoValue = $("#input-info").val();
     var payValue = $("#input-payment").val();
@@ -55,11 +51,11 @@
     	  	"address":addressValue,
     	  	"category":categoryValue,
     	  	"locationName":locationNameValue,
-    	  	"start":start,
-    	  	"end":end,
+    	  	"start":startValue,
+    	  	"end":endValue,
     	  	"description":descriptionValue,
         "info": infoValue,
-        "payment": payValue,
+        "payment": payValue=='1' ? true : false,
         "img":imgValue
       },
 

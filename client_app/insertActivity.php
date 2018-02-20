@@ -4,9 +4,9 @@
 	
 	$options = array(
 	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'header'  => "Content-type: application/json\r\n",
 	        'method'  => 'POST',
-	        'content' => http_build_query($_POST)
+	        'content' => json_encode($_POST)
 	    )
 	);
 	$context  = stream_context_create($options);

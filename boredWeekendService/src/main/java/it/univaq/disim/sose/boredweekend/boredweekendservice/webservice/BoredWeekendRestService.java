@@ -68,8 +68,8 @@ public class BoredWeekendRestService {
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/insertActivity")
+	@Consumes(MediaType.APPLICATION_JSON)
 	public void insert(Activity activity) {
 		
 		LOGGER.info("Received insertActivity request");
