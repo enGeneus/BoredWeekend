@@ -85,7 +85,36 @@
       for (var eventIndex in day["events"]) {
         var event = day["events"][eventIndex];
 
-        // COMPLETE THIS FOR CYCLE
+        var name = event["name"];
+        var city = event["city"];
+        // var daytime = event["daytime"];
+        var description = event["description"];
+        var imgURL = event["img"];
+
+        var payment = event["payment"];
+        var category = event["categories"];
+
+        var eventWrapper = $("#event_content").clone();
+        eventWrapper.removeAttr("id");
+
+        eventWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + city);
+        eventWrapper.find(".stuff_date").html(month.substring(0, 3) + " <strong>" + dayNumber + "</strong>");
+        eventWrapper.find(".title").text(name);
+        eventWrapper.find(".description").text(description);
+        eventWrapper.find(".image-background").attr("style", 'background-image: url("' + imgURL + '")');
+
+        var furtherInfos = category;
+
+        if (payment==false) {
+          furtherInfos += " | Free activity"
+        } else {
+          furtherInfos += " | Payment required"
+        }
+
+        eventWrapper.find(".further-info p").text(furtherInfos);
+
+        eventWrapper.removeClass("hidden");
+        dayWrapper.append(eventWrapper);
       }
 
       for (var activityIndex in day["activities"]) {

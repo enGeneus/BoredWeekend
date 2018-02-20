@@ -1,6 +1,5 @@
 package it.univaq.disim.sose.boredweekend.eventsservice.webservice;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;

@@ -50,7 +50,7 @@ public class GoogleMapsGeocodeServiceClient{
 
 				JSONObject response = new JSONObject(sb.toString());
 
-				LOGGER.debug(response.toString());
+				LOGGER.info(response.toString());
 
 				JSONObject location = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry")
 						.getJSONObject("location");

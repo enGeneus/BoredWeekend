@@ -24,7 +24,7 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.GoogleMa
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DateUtils;
 
 @Service
 public class BoredWeekendRestService {
@@ -42,17 +42,11 @@ public class BoredWeekendRestService {
 			@QueryParam("daytime") String daytime, @QueryParam("traveldistance") int distance) {
 
 		LOGGER.info("Received getWeekends request");
-		LOGGER.debug("Request field \"where\": " + city);
-		LOGGER.debug("Request field \"start\": " + start);
-		LOGGER.debug("Request field \"end\": " + end);
-		LOGGER.debug("Request field \"preferences\": " + preferences);
-		LOGGER.debug("Request field \"daytime\": " + daytime);
-		LOGGER.debug("Request field \"traveldistance\": " + distance);
 
-		Date startDate = DataUtils.getDateFromString(start, "yyy-MM-dd");
-		Date endDate = DataUtils.getDateFromString(end, "yyy-MM-dd");
+		Date startDate = DateUtils.getDateFromString(start, "yyy-MM-dd");
+		Date endDate = DateUtils.getDateFromString(end, "yyy-MM-dd");
 
-		List<String> preferencesList = DataUtils.extractListFromConcatenatedValues(preferences);
+		List<String> preferencesList = DateUtils.extractListFromConcatenatedValues(preferences);
 
 		Weekend weekend = prosumerCore.buildWeekend(city, startDate, endDate, preferencesList, daytime, distance);
 

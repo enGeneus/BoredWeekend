@@ -73,7 +73,7 @@ public class WundergroundServiceClient extends Thread {
 
 				JSONObject response = new JSONObject(sb.toString());
 
-				LOGGER.debug(response.toString());
+				LOGGER.info(response.toString());
 
 				JSONArray forecastDays = response.getJSONObject("forecast").getJSONObject("simpleforecast").getJSONArray("forecastday");
 

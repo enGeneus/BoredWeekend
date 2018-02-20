@@ -21,7 +21,7 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DateUtils;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServiceUtils;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesPT;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesService;
@@ -58,16 +58,11 @@ public class BoredWeekendProsumerCore {
 		LOGGER.info("Retreiving nearby cities...");
 		List<String> nearbyCities = callGeoNamesService(latlon[0], latlon[1], distance);
 
-		for (String currentCity : nearbyCities) {
-			LOGGER.debug("Nearby City found: " + currentCity);
-		}
-
 		if (nearbyCities==null || nearbyCities.isEmpty() || !nearbyCities.contains(city)) {
-			LOGGER.debug("Forced selected city into nerby list");
 			nearbyCities.add(city);
 		}
 
-		List<String> days = DataUtils.getWeekdaysInInterval(startDate, endDate);
+		List<String> days = DateUtils.getWeekdaysInInterval(startDate, endDate);
 
 		//Starting threads for activities and events
 		ActivityServiceClient activityService = new ActivityServiceClient(nearbyCities, preferences, days, daytime);
@@ -150,25 +145,24 @@ public class BoredWeekendProsumerCore {
 
 	private Weekend composeData(List<Activity> activities, List<Event> events, ForecastInfo forecast, Date startDate, Date endDate) {
 
-		String startWeekdayName = DataUtils.getWeekdayName(startDate);
-		String endWeekdayName = DataUtils.getWeekdayName(endDate);
+		String startWeekdayName = DateUtils.getWeekdayName(startDate);
+		String endWeekdayName = DateUtils.getWeekdayName(endDate);
 
-		LOGGER.debug("Starting weekday: " + startWeekdayName);
-		LOGGER.debug("Ending weekday: " + endWeekdayName);
+		LOGGER.info("Starting weekday: " + startWeekdayName);
+		LOGGER.info("Ending weekday: " + endWeekdayName);
 
-		LOGGER.debug(activities.size() + " Activities found");
-		LOGGER.debug(events.size() + " Events found");
+		LOGGER.info(activities.size() + " Activities found");
+		LOGGER.info(events.size() + " Events found");
 
-		List<Date> dates = DataUtils.getDaysBetweenDates(startDate, endDate);
+		List<Date> dates = DateUtils.getDaysBetweenDates(startDate, endDate);
 
 		Map<String, Day> days = new HashMap<>();
 
 		// Create list of days
 		for (Date date : dates) {
-			LOGGER.debug("Creating new weekend day for " + date.toString());
 			Day day = new Day(date);
 			day.setWeatherForecast(forecast.getDayForecast(date));
-			days.put(DataUtils.getDateSimpleRepresentation(date), day);
+			days.put(DateUtils.getDateSimpleRepresentation(date), day);
 		}
 
 		// Filter activities and add to each day
@@ -176,7 +170,6 @@ public class BoredWeekendProsumerCore {
 			for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
 				Day day = dayEntry.getValue();
 				if (activity.isAvailable() && activity.getDays().contains(day.getDay()) && (!activity.getCategories().contains("Outdoors") || day.isGoodWeather())) {
-					LOGGER.debug("Adding activity " + activity.getName() + " to day " + day.getDay() + " " + day.getDayNumber());
 					day.getActivities().add(activity);
 				}
 			}
@@ -184,9 +177,9 @@ public class BoredWeekendProsumerCore {
 
 		// Add events to each day
 		for (Event event : events) {
-			List<Date> eventDays = DataUtils.getDaysBetweenDates(event.getStart(), event.getEnd());
+			List<Date> eventDays = DateUtils.getDaysBetweenDates(event.getStart(), event.getEnd());
 			for (Date eventDay : eventDays) {
-				String dayRepresentation = DataUtils.getDateSimpleRepresentation(eventDay);
+				String dayRepresentation = DateUtils.getDateSimpleRepresentation(eventDay);
 				if (days.containsKey(dayRepresentation)) {
 					days.get(dayRepresentation).getEvents().add(event);
 				}

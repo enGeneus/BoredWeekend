@@ -72,6 +72,9 @@ public class JDBCActivityDAO implements ActivityDAO {
 			con = dataSource.getConnection();
 			
 	        st = con.createStatement();
+
+	        LOGGER.info("ActivityDAO is going to perform the query " + query);
+
 	        st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 	        
 	        rs = st.getGeneratedKeys();
@@ -84,6 +87,9 @@ public class JDBCActivityDAO implements ActivityDAO {
 	     
 	        for(String cateory : categories) {
 		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+risultato+",'"+cateory+"')";
+
+		        LOGGER.info("ActivityDAO is going to perform the query " + query_category);
+
 		        st.executeUpdate(query_category);
 	        }
 	            
@@ -92,6 +98,9 @@ public class JDBCActivityDAO implements ActivityDAO {
 	        
 	        for(String day : days) {
 		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+risultato+",'"+day+"')";
+
+		        LOGGER.info("ActivityDAO is going to perform the query " + query_days);
+
 		        st.executeUpdate(query_days);
 	        }
 	        

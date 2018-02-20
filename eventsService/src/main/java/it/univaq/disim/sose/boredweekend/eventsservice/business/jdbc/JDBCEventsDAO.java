@@ -34,7 +34,6 @@ public class JDBCEventsDAO implements EventsDAO {
 	private static final String ID_COLUMN = "id_event";
 	private static final String NAME_COLUMN = "name";
 	private static final String CITY_COLUMN = "city";
-	private static final String DATE_COLUMN = "date";
 	private static final String START_COLUMN = "start";
 	private static final String END_COLUMN = "end";
 	private static final String PAYMENT_COLUMN = "payment";
@@ -85,6 +84,9 @@ public class JDBCEventsDAO implements EventsDAO {
 
 			String query_category = "INSERT INTO `" + CATEGORY_TYPE + "`(`" + FK_ACTIVITIES_ID_CATEGORY + "`, `"
 					+ CATEGORY_COLUMN + "`) VALUES (" + risultato + ",'" + category + "')";
+
+			LOGGER.info("Activity DAO is going to perform the query: " + query_category);
+
 			st.executeUpdate(query_category);
 
 			rs.close();
@@ -119,35 +121,6 @@ public class JDBCEventsDAO implements EventsDAO {
 
 	@Override
 	public List<Event> find(List<String> city, Date start, Date end) {
-
-		/*
-		String sql_init0 = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE";	
-
-		for(String citys : city) {
-			if(city.size() == 1) {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
-			} else {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
-			}	
-		}
-		String  sql_init;
-		
-		if(city.size() > 1) {
-			 sql_init = sql_init0.substring(0, sql_init0.length()-4);
-		}else {
-			 sql_init = sql_init0;
-		}
-		*/
-		
-
-		// inizio costruzione query
-		//old query
-		/*
-		String sql_init = "SELECT a.*, c." + CATEGORY_COLUMN + " FROM " + EVENTS + " as a JOIN " + CATEGORY_TYPE
-				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE a." + CITY_COLUMN + " = '"
-				+ city.replace("'", "\\'") + "" + "' AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
-				+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
-		 */
 		
 		String sql_init0 = "SELECT a.*, c." + CATEGORY_COLUMN + " FROM " + EVENTS + " as a JOIN " + CATEGORY_TYPE
 				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE (";
@@ -170,12 +143,10 @@ public class JDBCEventsDAO implements EventsDAO {
 		
 		sql_init = sql_init+") AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
 		+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
-		
-		System.out.println(sql_init);
 
 		// sql_init contiene la query del giusto formato
 
-		LOGGER.debug("Activity DAO is going to perform the query: " + sql_init);
+		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
 
 		List<Event> result = new ArrayList<>();
 		Connection con = null;

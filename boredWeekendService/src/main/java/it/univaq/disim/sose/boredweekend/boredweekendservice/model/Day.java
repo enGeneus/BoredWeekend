@@ -90,6 +90,7 @@ public class Day {
 	private enum GoodWeatherValues {
 		CLEAR("Clear"),
 		CLOUDY("Cloudy"),
+		OVERCAST("Overcast"),
 		HAZE("Haze"),
 		MOSTLY_CLOUDY("Mostly Cloudy"),
 		MOSTLY_SUNNY("Mostly Sunny"),
