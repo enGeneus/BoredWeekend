@@ -50,6 +50,7 @@
     var daytimeValue = $("#input-day_time").val();
     var infoValue = $("#input-info").val();
     var payValue = $("#input-payment").val();
+    var imgValue = $("#input-img").val();
     
     var preferences;
     if (selectedCategories.length == 0) {
@@ -76,7 +77,8 @@
         "info": infoValue,
         "payment": payValue,
         "categories": preferences.toString(),
-        "days": preferences_days.toString()
+        "days": preferences_days.toString(),
+        "img": imgValue
       },
 
       success: function(response) {
