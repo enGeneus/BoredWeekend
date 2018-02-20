@@ -78,11 +78,104 @@ button.submit:hover {
   background-color: #efefef;
 }
 
-div.element_container {
+div.results_container {
   margin-right: auto;
   margin-left: auto;
 }
 
+.element_image img {
+  width: 100%;
+}
+
+div.panel {
+  background-color: white;
+}
+
+div.element_content {
+  margin-bottom: 10px;
+}
+
+div.element_content .details {
+  background-color: white;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+div.element_content .details .raised-details {
+  background-color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  position: relative;
+  top: -60px;
+}
+
+div.element_content .details .further-info {
+  position: relative;
+  padding-left: 20px;
+  top: -30px;
+}
+
+
+div.further-info p,
+p.place,
+div.overview span {
+  font-size: 14px;
+  font-weight: normal;
+  color: rgb(102, 102, 102);
+  text-transform: uppercase;
+}
+
+p.description {
+  font-size: 16px;
+  font-weight: normal;
+  color: rgb(33, 37, 41);
+}
+
 div.hidden {
   display: none;
+}
+
+div.day-overview {
+  display: block;
+  height: 110px;
+  background-color: white;
+  padding: 15px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+div.calendar-date {
+  color: white;
+  background-color: #80c64a;
+  display: block;
+  float: left;
+  width: 70px;
+  height: 80px;
+  padding-top: 5px;
+  border-radius: 4px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.calendar-date span {
+  display: block;
+}
+
+span.day-number {
+  font-weight: bolder;
+}
+
+.forecast {
+  margin-top: 10px;
+}
+
+span.forecast-title {
+  color: rgb(102, 102, 102);
+  font-style: italic;
+}
+
+span.forecast-value {
+  margin-left: 10px;
+  font-size: 1.2em;
 }

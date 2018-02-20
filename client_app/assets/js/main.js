@@ -15,7 +15,6 @@
       }
       $(this).removeClass("active");
 
-
     } else {
       selectedCategories.push($(this).text());
       $(this).addClass("active");
@@ -62,13 +61,26 @@
     var days = response["days"];
     for (var dayIndex in days) {
       var day = days[dayIndex];
+      var dayName = day["day"];
       var dayNumber = day["dayNumber"];
       var month = day["month"];
       var forecast = day["weatherForecast"];
 
       var dayWrapper = $("#day-wrapper").clone();
       dayWrapper.removeAttr("id");
-      dayWrapper.find("h2").text(forecast);
+
+      dayWrapper.find(".day-name").text(dayName.substring(0,3));
+      dayWrapper.find(".day-number").text(dayNumber);
+      dayWrapper.find(".month").text(month.substring(0,3));
+
+      if (forecast != null) {
+        dayWrapper.find(".forecast-value").text(forecast);
+      } else {
+        dayWrapper.find(".forecast-title").text("No weather forecast available");
+        dayWrapper.find(".forecast-value").remove();
+      }
+
+      dayWrapper.find(".overview span").text(day["events"].length + " events and " + day["activities"].length + " events found");
 
       for (var eventIndex in day["events"]) {
         var event = day["events"][eventIndex];
@@ -83,22 +95,42 @@
         var daytime = activity["daytime"];
         var info = activity["info"];
 
+        var payment = activity["payment"];
+        var categories = activity["categories"];
+
         var activityWrapper = $("#element_content").clone();
-        // activityWrapper.find("")
         activityWrapper.removeAttr("id");
 
-        activityWrapper.find(".stuff_category").text(city);
+        activityWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + city);
         activityWrapper.find(".stuff_date").html(month.substring(0, 3) + " <strong>" + dayNumber + "</strong>");
-        activityWrapper.find("h2 a").text(name);
-        activityWrapper.find("p").text(info);
+        activityWrapper.find(".title").text(name);
+        activityWrapper.find(".description").text(info);
+
+        var furtherInfos = "";
+        switch (daytime) {
+          case "FullDay":
+          furtherInfos = "Full day";
+          break;
+          default:
+          furtherInfos = daytime;
+        }
+        if (payment==false) {
+          furtherInfos = " | Free activity"
+        }
+        if (categories.indexOf("Family") != -1) {
+            furtherInfos += " | For families";
+        }
+
+        activityWrapper.find(".further-info p").text(furtherInfos);
 
         activityWrapper.removeClass("hidden");
         dayWrapper.append(activityWrapper);
       }
 
-      $(".element_container").append(dayWrapper);
+      $(".results_container").append(dayWrapper);
       dayWrapper.removeClass("hidden");
     }
+
     $("#results").removeClass("hidden");
     $("#form").fadeOut(function(){
       $("section#results").fadeIn();

@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="assets/css/contact3.css"/>
-	<link rel="stylesheet" type="text/css" href="assets/css/structure.css"/>
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/structure.css"/> -->
   <link rel="stylesheet" type="text/css" href="assets/css/boredweekend.css"/>
 </head>
 <body>
@@ -88,31 +88,48 @@
 	<section id="results" class="hidden">
 	  <div class="container">
 	    <div class="row">
-	      <div class="col-sm-12 col-md-6 col-lg-6 element_container">
+	      <div class="col-sm-12 col-md-8 col-lg-6 results_container">
 					<!-- Day of weekend -->
 	      </div>
 	    </div>
 	  </div>
 	</section>
 
-	<div id="element_content" class="single_stuff element_content hidden">
-		<div class="single_stuff_img">
-			<a href="single_page.html"><img src="assets/images/stuff_img1.jpg" alt="img"></a>
-		</div>
-		<div class="single_stuff_article">
-				<div class="single_sarticle_inner">
-						<a class="stuff_category" href="#">Luogo</a>
-					<div class="stuff_article_inner">
-						<span class="stuff_date">Month <strong>00</strong></span>
-						<h2><a href="single_page.html">Nome</a></h2>
-						<p>Descrizione</p>
+	<div id="element_content" class="element_content activity hidden">
+		<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="element_image">
+						<a href="single_page.html"><img src="assets/images/stuff_img1.jpg" alt="img"></a>
+					</div>
+					<div class="details">
+						<div class="raised-details">
+							<p class="place" href="#"><i class="fa fa-map-marker"></i> Luogo</p>
+							<!-- <span class="stuff_date">Month <strong>00</strong></span> -->
+							<h2 class="title">Nome</h2>
+							<p class="description">Descrizione</p>
+						</div>
+						<div class="further-info">
+							<p>Info</p>
+						</div>
 					</div>
 				</div>
 		</div>
 	</div>
 
-	<div id="day-wrapper" class="leftbar_content hidden">
-		<h2>Intestazione giorno</h2>
+	<div id="day-wrapper" class="day-contents hidden">
+			<div class="day-overview">
+				<div class="calendar-date">
+					<span class="day-name"></span>
+					<span class="day-number"></span>
+					<span class="month"></span>
+				</div>
+				<div class="forecast">
+					<span class="forecast-title">Weather:</span><span class="forecast-value">Mostly Cloudy</span>
+				</div>
+				<div class="overview">
+					<span>Found 2 activities and 3 events</span>
+				</div>
+		</div>
 		<!-- Events and activities -->
 	</div>
 
