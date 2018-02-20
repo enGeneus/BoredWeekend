@@ -1,19 +1,23 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.webservice;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.GoogleMapsGeocodeServiceClient;
@@ -22,15 +26,20 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
 
-@RestController
+@Service
 public class BoredWeekendRestService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendRestService.class);
 
-	@RequestMapping(value = "/getWeekends", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
-	public Weekend getWeekends(@RequestParam("where") String city, @RequestParam("start") String start,
-			@RequestParam("end") String end, @RequestParam("preferences") String preferences,
-			@RequestParam("daytime") String daytime, @RequestParam("traveldistance") int distance) {
+	@Autowired
+	BoredWeekendProsumerCore prosumerCore;
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/getWeekends")
+	public Weekend getWeekends(@QueryParam("where") String city, @QueryParam("start") String start,
+			@QueryParam("end") String end, @QueryParam("preferences") String preferences,
+			@QueryParam("daytime") String daytime, @QueryParam("traveldistance") int distance) {
 
 		LOGGER.info("Received getWeekends request");
 		LOGGER.debug("Request field \"where\": " + city);
@@ -45,35 +54,39 @@ public class BoredWeekendRestService {
 
 		List<String> preferencesList = DataUtils.extractListFromConcatenatedValues(preferences);
 
-		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
 		Weekend weekend = prosumerCore.buildWeekend(city, startDate, endDate, preferencesList, daytime, distance);
 
 		ObjectWriter ow = new ObjectMapper().writer();
+
 		try {
 			LOGGER.debug(ow.writeValueAsString(weekend));
-		} catch (JsonProcessingException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return weekend;
 	}
 	
-	@RequestMapping(value = "/insertActivity", method = RequestMethod.POST, headers = "Accept=application/json")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/insertActivity")
 	public void insert(Activity activity) {
+		
+		LOGGER.info("Received insertActivity request");
 		
 		double[] latLon = GoogleMapsGeocodeServiceClient.callService(activity.getCity());
 		activity.setLat(latLon[0]);
 		activity.setLon(latLon[1]);
 
-		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
 		prosumerCore.insertActivity(activity);
 	}
-	
-	@RequestMapping(value = "/insertEvent", method = RequestMethod.POST, headers = "Accept=application/json")
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/insertEvent")
 	public void insert(Event event) {
 
-		LOGGER.info("called insert event");
-		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
+		LOGGER.info("Received insertEvent request");
 		prosumerCore.insertEvent(event);
 	}
 	

@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
@@ -36,6 +37,7 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventType;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsPT;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
+@Component
 public class BoredWeekendProsumerCore {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendProsumerCore.class);
