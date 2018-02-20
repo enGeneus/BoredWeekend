@@ -80,7 +80,7 @@
         dayWrapper.find(".forecast-value").remove();
       }
 
-      dayWrapper.find(".overview span").text(day["events"].length + " events and " + day["activities"].length + " events found");
+      dayWrapper.find(".overview span").text(day["events"].length + " events and " + day["activities"].length + " activities found");
 
       for (var eventIndex in day["events"]) {
         var event = day["events"][eventIndex];
@@ -94,17 +94,19 @@
         var city = activity["city"];
         var daytime = activity["daytime"];
         var info = activity["info"];
+        var imgURL = activity["img"];
 
         var payment = activity["payment"];
         var categories = activity["categories"];
 
-        var activityWrapper = $("#element_content").clone();
+        var activityWrapper = $("#activity_content").clone();
         activityWrapper.removeAttr("id");
 
         activityWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + city);
         activityWrapper.find(".stuff_date").html(month.substring(0, 3) + " <strong>" + dayNumber + "</strong>");
         activityWrapper.find(".title").text(name);
         activityWrapper.find(".description").text(info);
+        activityWrapper.find(".image-background").attr("style", 'background-image: url("' + imgURL + '")');
 
         var furtherInfos = "";
         switch (daytime) {
@@ -114,11 +116,13 @@
           default:
           furtherInfos = daytime;
         }
-        if (payment==false) {
-          furtherInfos = " | Free activity"
-        }
         if (categories.indexOf("Family") != -1) {
             furtherInfos += " | For families";
+        }
+        if (payment==false) {
+          furtherInfos += " | Free activity"
+        } else {
+          furtherInfos += " | Payment required"
         }
 
         activityWrapper.find(".further-info p").text(furtherInfos);

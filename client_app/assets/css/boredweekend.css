@@ -95,27 +95,40 @@ div.element_content {
   margin-bottom: 10px;
 }
 
+div.element_content .image-background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+div.element_content .image-showing-container {
+  height: 250px;
+}
+
+div.pane
+
 div.element_content .details {
   background-color: white;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-div.element_content .details .raised-details {
+div.element_content .raised-details {
   background-color: white;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
   position: relative;
-  top: -60px;
+  bottom: 0;
 }
 
-div.element_content .details .further-info {
-  position: relative;
-  padding-left: 20px;
-  top: -30px;
+div.element_content .further-info {
+  height: 60px;
+  padding-top: 20px;
+  padding-left: 50px;
 }
-
 
 div.further-info p,
 p.place,
