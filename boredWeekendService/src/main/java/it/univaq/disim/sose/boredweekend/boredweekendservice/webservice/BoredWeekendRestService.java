@@ -16,8 +16,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.GoogleMapsGeocodeServiceClient;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.InsertActivity;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.InsertEvent;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
@@ -65,17 +63,16 @@ public class BoredWeekendRestService {
 		double[] latLon = GoogleMapsGeocodeServiceClient.callService(activity.getCity());
 		activity.setLat(latLon[0]);
 		activity.setLon(latLon[1]);
-		InsertActivity newactivity = new InsertActivity(activity);
-		newactivity.addActivity();
-		
+
+		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
+		prosumerCore.insertActivity(activity);
 	}
 	
 	@RequestMapping(value = "/insertEvent", method = RequestMethod.POST, headers = "Accept=application/json")
-	public void insert_event(Event event) {
-		
-		InsertEvent newevent = new InsertEvent(event);
-		newevent.addEvent();
-		
+	public void insert(Event event) {
+
+		BoredWeekendProsumerCore prosumerCore = new BoredWeekendProsumerCore();
+		prosumerCore.insertEvent(event);
 	}
 	
 }

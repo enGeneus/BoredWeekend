@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,7 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServic
 
 public class GoogleMapsGeocodeServiceClient{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendProsumerCore.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GoogleMapsGeocodeServiceClient.class);
 	
 	public static double[] callService(String cityName) {
 		double[] latlon = new double[2];

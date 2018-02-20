@@ -22,6 +22,19 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DataUtils;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServiceUtils;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesPT;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesService;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivityCategory;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivityType;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.AddActivityRequest;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.Daytime;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.Position;
+import it.univaq.disim.sose.boredweekend.providers.activitiesservice.WeekDay;
+import it.univaq.disim.sose.boredweekend.providers.eventsservice.AddEventRequest;
+import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventCategory;
+import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventType;
+import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsPT;
+import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
 public class BoredWeekendProsumerCore {
 
@@ -79,6 +92,59 @@ public class BoredWeekendProsumerCore {
 		return weekend;
 	}
 
+	public void insertActivity(Activity activity) {
+		ActivityType activityType = new ActivityType();
+
+		activityType.setName(activity.getName());
+		activityType.setInfo(activity.getInfo());
+		activityType.setCity(activity.getCity());
+		activityType.setPayment(activity.isPayment());
+		activityType.setState(true);
+		activityType.setImg(activity.getImg());
+		activityType.setDaytime(Daytime.fromValue(activity.getDaytime()));
+		
+		Position position = new Position();
+		position.setLatitude(activity.getLat());
+		position.setLongitude(activity.getLon());
+		activityType.setPosition(position);
+
+		for (String category : activity.getCategories()) {
+			activityType.getCategory().add(ActivityCategory.fromValue(category));
+		}
+
+		for (String weekDay : activity.getDays()) {
+			activityType.getDays().add(WeekDay.fromValue(weekDay));
+		}
+
+		ActivitiesService service = new ActivitiesService();
+		ActivitiesPT port = service.getActivitiesPort();
+		AddActivityRequest request = new AddActivityRequest();
+		request.setActivity(activityType);
+		port.addActivity(request.getActivity());
+		
+	}
+
+	public void insertEvent(Event event) {
+		EventType eventType = new EventType();
+
+		eventType.setAddress(event.getAddress());
+		eventType.setCity(event.getCity());
+		eventType.setCategory(EventCategory.fromValue(event.getCategories()));
+		eventType.setDescription(event.getDescription());
+		eventType.setEnd(event.getEnd());
+		eventType.setInfo(event.getInfo());
+		eventType.setImg(event.getImg());
+		eventType.setLocationName(event.getLocationName());
+		eventType.setName(event.getName());
+		eventType.setPayment(event.isPayment());
+		eventType.setStart(event.getStart());
+
+		EventsService service = new EventsService();
+		EventsPT port = service.getEventsPort();
+		AddEventRequest request = new AddEventRequest();
+		request.setEvent(eventType);
+		port.addEvent(request.getEvent());
+	}
 
 	private Weekend composeData(List<Activity> activities, List<Event> events, ForecastInfo forecast, Date startDate, Date endDate) {
 
