@@ -11,15 +11,15 @@
 					  http://cxf.apache.org/jaxrs
                       http://cxf.apache.org/schemas/jaxrs.xsd">
 
-	<jaxrs:server id="stapprestservice" address="/services">
+	<jaxrs:server id="boredWeekendServer" address="/">
 		<jaxrs:serviceBeans>
-			<ref bean="stapprest" />
+			<ref bean="boredWeekendRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
    			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
 		</jaxrs:providers>
 	</jaxrs:server>
 
-	<bean id="stapprest" class="it.univaq.disim.sose.boredweekend.boredweekendservice.webservice.BoredWeekendRestService" />
+	<bean id="boredWeekendRest" class="it.univaq.disim.sose.boredweekend.boredweekendservice.webservice.BoredWeekendRestService" />
 
 </beans>
