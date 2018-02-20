@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>BoredWeekend</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="assets/images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"/>
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+  	
+  	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+  	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/contact3.css"/>
+	<link rel="stylesheet" type="text/css" href="assets/css/structure.css"/>
+  	<link rel="stylesheet" type="text/css" href="assets/css/boredweekend.css"/>
+  	
+  	
+</head>
+<body>
+
+  <div id="body-wrapper">
+  </div>
+
+	<div id="form" class="bg-contact3">
+		<div class="container-contact3">
+			<div class="wrap-contact3">
+				<form class="contact3-form validate-form boredweekend">
+					<span class="contact3-form-title">
+						Insert Event
+					</span>
+					
+					<div class="wrap-input3 validate-input" data-validate="Name is required">
+						<input id="input-name" class="input3" type="text" name="name" placeholder="Name">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="City is required">
+						<input id="input-city" class="input3" type="text" name="city" placeholder="City">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-category" class="selection-2" name="category">
+								<option selected disabled>Select category</option>
+								<option value="LiveMusic">LiveMusic</option>
+								<option value="Theatre">Theatre</option>
+								<option value="Sport">Sport</option>
+								<option value="Culture">Culture</option>
+								<option value="Party">Party</option>
+								<option value="Festival">Festival</option>
+								<option value="Exhibition">Exhibition</option>																
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="Location name is required">
+						<input id="input-locationName" class="input3" type="text" name="locationName" placeholder="locationName">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="input-daterange input-time wrap-input3" id="datepicker">
+			            <div class="row">
+			              <div class="col-md-2">
+			                <span>&nbsp;From</span>
+			              </div>
+			              <div class="col-md-4">
+			                <input id="input-startdate" type="text" class="input3" name="startdate" placeholder="Start Date" />
+			              </div>
+			           </div>
+			        </div>
+			        
+			        <div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-starttime" class="selection-2" name="starttime">
+								<option selected disabled>Select start time</option>
+								<option value="00:00">00:00</option>
+								<option value="00:30">00:30</option>
+								<option value="01:00">01:00</option>
+								<option value="01:30">01:30</option>
+								<option value="02:00">02:00</option>
+								<option value="02:30">02:30</option>
+								<option value="03:00">03:00</option>	
+								<option value="03:30">03:30</option>
+								<option value="04:00">04:00</option>
+								<option value="04:30">04:30</option>
+								<option value="05:00">05:00</option>
+								<option value="05:30">05:30</option>
+								<option value="06:00">06:00</option>	
+								<option value="06:30">06:30</option>
+								<option value="07:00">07:00</option>
+								<option value="08:30">08:30</option>
+								<option value="09:00">09:00</option>
+								<option value="09:30">09:30</option>
+								<option value="10:00">10:00</option>	
+								<option value="10:30">10:30</option>
+								<option value="11:00">11:00</option>
+								<option value="11:30">11:30</option>
+								<option value="12:00">12:00</option>
+								<option value="12:30">12:30</option>
+								<option value="13:00">13:00</option>
+								<option value="13:30">13:30</option>
+								<option value="14:00">14:00</option>
+								<option value="14:30">14:30</option>
+								<option value="15:00">15:00</option>
+								<option value="15:30">15:30</option>
+								<option value="16:00">16:00</option>	
+								<option value="16:30">16:30</option>
+								<option value="17:00">17:00</option>
+								<option value="17:30">17:30</option>
+								<option value="18:00">18:00</option>
+								<option value="18:30">18:30</option>
+								<option value="19:00">19:00</option>	
+								<option value="19:30">19:30</option>
+								<option value="20:00">20:00</option>
+								<option value="20:30">20:30</option>
+								<option value="21:00">21:00</option>
+								<option value="21:30">21:30</option>
+								<option value="22:00">22:00</option>	
+								<option value="22:30">22:30</option>
+								<option value="23:00">23:00</option>
+								<option value="23:30">23:30</option>
+																		
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					
+					
+					<div class="input-daterange input-time wrap-input3" id="datepicker">
+			            <div class="row">
+			              <div class="col-md-2">
+			                <span>&nbsp;To</span>
+			              </div>
+			              <div class="col-md-4">
+			                <input id="input-enddate" type="text" class="input3" name="enddate" placeholder="End Date" />
+			              </div>
+			           </div>
+			        </div>
+			        
+			        <div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-endtime" class="selection-2" name="endtime">
+								<option selected disabled>Select end time</option>
+								<option value="00:00">00:00</option>
+								<option value="00:30">00:30</option>
+								<option value="01:00">01:00</option>
+								<option value="01:30">01:30</option>
+								<option value="02:00">02:00</option>
+								<option value="02:30">02:30</option>
+								<option value="03:00">03:00</option>	
+								<option value="03:30">03:30</option>
+								<option value="04:00">04:00</option>
+								<option value="04:30">04:30</option>
+								<option value="05:00">05:00</option>
+								<option value="05:30">05:30</option>
+								<option value="06:00">06:00</option>	
+								<option value="06:30">06:30</option>
+								<option value="07:00">07:00</option>
+								<option value="08:30">08:30</option>
+								<option value="09:00">09:00</option>
+								<option value="09:30">09:30</option>
+								<option value="10:00">10:00</option>	
+								<option value="10:30">10:30</option>
+								<option value="11:00">11:00</option>
+								<option value="11:30">11:30</option>
+								<option value="12:00">12:00</option>
+								<option value="12:30">12:30</option>
+								<option value="13:00">13:00</option>
+								<option value="13:30">13:30</option>
+								<option value="14:00">14:00</option>
+								<option value="14:30">14:30</option>
+								<option value="15:00">15:00</option>
+								<option value="15:30">15:30</option>
+								<option value="16:00">16:00</option>	
+								<option value="16:30">16:30</option>
+								<option value="17:00">17:00</option>
+								<option value="17:30">17:30</option>
+								<option value="18:00">18:00</option>
+								<option value="18:30">18:30</option>
+								<option value="19:00">19:00</option>	
+								<option value="19:30">19:30</option>
+								<option value="20:00">20:00</option>
+								<option value="20:30">20:30</option>
+								<option value="21:00">21:00</option>
+								<option value="21:30">21:30</option>
+								<option value="22:00">22:00</option>	
+								<option value="22:30">22:30</option>
+								<option value="23:00">23:00</option>
+								<option value="23:30">23:30</option>
+																		
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					
+					
+					<div class="wrap-input3 validate-input" data-validate="Address is required">
+						<input id="input-address" class="input3" type="text" name="address" placeholder="Address">
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="Insert informations">
+						<textarea id="input-info" class="input3" name="info" placeholder="info"></textarea>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 input3-select">
+						<div>
+							<select id="input-payment" class="selection-2" name="payment">
+								<option selected disabled>Paid activity?</option>
+								<option value="1">Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="Insert Description">
+						<textarea id="input-description" class="input3" name="description" placeholder="description"></textarea>
+						<span class="focus-input3"></span>
+					</div>
+					
+					<div class="wrap-input3 validate-input" data-validate="Insert URL image">
+						<input id="input-img" class="input3" type="text" name="img" placeholder="Img URL">
+						<span class="focus-input3"></span>
+					</div>
+					
+					
+					<div class="container-contact3-form-btn">
+						<button class="submit">
+							Insert Event
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="dropDownSelect1"></div>
+
+  	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+  	<script src="assets/js/insertEvent.js"></script>
+
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+
+	<script type="text/javascript">
+	$('.input-daterange').datepicker(
+		{
+		orientation: "top auto",
+		todayHighlight: true,
+		format: "yyyy-mm-dd",
+		toggleActive: true}
+			);
+	</script>
+	
+	
+
+</body>
+</html>
