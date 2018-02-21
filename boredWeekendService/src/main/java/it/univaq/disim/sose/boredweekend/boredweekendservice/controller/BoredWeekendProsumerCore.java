@@ -10,11 +10,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
@@ -44,6 +47,15 @@ public class BoredWeekendProsumerCore {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendProsumerCore.class);
 
+	@Autowired
+	private ActivityServiceClientSpring activityServiceClient;
+
+	@Autowired
+	private EventServiceClientSpring eventServiceClientSpring;
+
+	@Autowired
+	private WundergroundServiceClientSpring wundergroundServiceClient;
+
 	public Weekend buildWeekend(String city, Date startDate, Date endDate, List<String> preferences, int distance) {
 		LOGGER.info("BoredWeekend is handling the getWeekends request in its core");
 
@@ -52,10 +64,12 @@ public class BoredWeekendProsumerCore {
 
 		LOGGER.debug("Coordinates: " + latlon[0] + "," + latlon[1]);
 
-		// Start thread for weather forecast service
-		LOGGER.info("Starting new thread for calling forecast service...");
-		WundergroundServiceClient forecastService = new WundergroundServiceClient(latlon[0], latlon[1]);
-		forecastService.run();
+//		// Start thread for weather forecast service
+//		LOGGER.info("Starting new thread for calling forecast service...");
+//		WundergroundServiceClient forecastService = new WundergroundServiceClient(latlon[0], latlon[1]);
+//		forecastService.run();
+
+        CompletableFuture<ForecastInfo> forecastinfo = wundergroundServiceClient.getForecastInfo(latlon[0], latlon[1]);
 
 		LOGGER.info("Retreiving nearby cities...");
 		List<String> nearbyCities = callGeoNamesService(latlon[0], latlon[1], distance);
@@ -66,26 +80,41 @@ public class BoredWeekendProsumerCore {
 
 		List<String> days = DateUtils.getWeekdaysInInterval(startDate, endDate);
 
-		//Starting threads for activities and events
-		ActivityServiceClient activityService = new ActivityServiceClient(nearbyCities, preferences, days);
-		activityService.run();
+//		//Starting threads for activities and events
+//		ActivityServiceClient activityService = new ActivityServiceClient(nearbyCities, preferences, days);
+//		activityService.run();
+//
+//		EventServiceClient eventService = new EventServiceClient(nearbyCities, startDate, endDate);
+//		eventService.run();
+//
+//		//Join threads
+//		try {
+//			forecastService.join();
+//			activityService.join();
+//			eventService.join();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
-		EventServiceClient eventService = new EventServiceClient(nearbyCities, startDate, endDate);
-		eventService.run();
+		 // Kick of multiple, asynchronous lookups
+        CompletableFuture<List<Activity>> activity = activityServiceClient.getActivity(nearbyCities, preferences, days);
+        CompletableFuture<List<Event>> events1 = eventServiceClientSpring.getEvent(nearbyCities, startDate, endDate);
 
-		//Join threads
+        // Wait until they are all done
+        CompletableFuture.allOf(activity,events1,forecastinfo).join();
+		
+        //Recovering data from threads
+		ForecastInfo forecast = new ForecastInfo();
+		List<Activity> activities = new ArrayList<>();
+		List<Event> events = new ArrayList<>();
+		
 		try {
-			forecastService.join();
-			activityService.join();
-			eventService.join();
-		} catch (InterruptedException e) {
+			forecast = forecastinfo.get();
+			activities = activity.get();
+			events = events1.get();
+		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
-
-		//Recovering data from threads
-		ForecastInfo forecast = forecastService.getForecast();
-		List<Activity> activities = activityService.getActivity();
-		List<Event> events = eventService.getEvents();
 
 		Weekend weekend = composeData(activities, events, forecast, startDate, endDate);
 		return weekend;
