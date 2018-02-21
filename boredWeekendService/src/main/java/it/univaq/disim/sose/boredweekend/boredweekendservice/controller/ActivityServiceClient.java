@@ -38,6 +38,7 @@ class ActivityServiceClient extends Thread {
 			
 			Activity returningActivity = new Activity();
 			
+			returningActivity.setId(activity.getId());
 			returningActivity.setName(activity.getName());
 			returningActivity.setInfo(activity.getInfo());
 			returningActivity.setCity(activity.getCity());

@@ -34,6 +34,7 @@ public class EventsPTImpl implements EventsPT {
 			LOGGER.info("Found event: " + event.getName());
 
 			EventType eventType = new EventType();
+			eventType.setId(event.getId());
 			eventType.setAddress(event.getAddress());
 			eventType.setCategory(EventCategory.fromValue(event.getCategories()));
 			eventType.setCity(event.getCity());

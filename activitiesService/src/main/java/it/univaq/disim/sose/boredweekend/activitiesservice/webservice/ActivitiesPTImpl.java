@@ -81,7 +81,8 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 
 		for (Activity activity : activities) {
 			ActivityType returningActivity = new ActivityType();
-
+			
+			returningActivity.setId(activity.getId());
 			returningActivity.setName(activity.getName());
 			returningActivity.setInfo(activity.getInfo());
 			returningActivity.setCity(activity.getCity());

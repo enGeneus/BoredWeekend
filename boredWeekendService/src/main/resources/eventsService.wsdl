@@ -38,6 +38,7 @@
 
 			<xsd:complexType name="EventType">
 				<xsd:sequence>
+					<xsd:element name="id" type="xsd:int" minOccurs="0" />
 					<xsd:element name="category" type="tns:EventCategory" />
 					<xsd:element name="info" type="xsd:string" />
 					<xsd:element name="address" type="xsd:string" />

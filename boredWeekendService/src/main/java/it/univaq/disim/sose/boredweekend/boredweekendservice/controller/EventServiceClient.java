@@ -34,6 +34,7 @@ class EventServiceClient extends Thread {
 			
 			Event addevent = new Event();
 			
+			addevent.setId(event.getId());
 			addevent.setAddress(event.getAddress());
 			addevent.setCity(event.getCity());
 			addevent.setCategory(event.getCategory().value());

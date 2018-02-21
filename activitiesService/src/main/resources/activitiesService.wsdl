@@ -38,6 +38,7 @@
 
 			<xsd:complexType name="ActivityType">
 				<xsd:sequence>
+					<xsd:element name="id" type="xsd:int" minOccurs="0" />
 					<xsd:element name="name" type="xsd:string" />
 					<xsd:element name="city" type="xsd:string" />
 					<xsd:element name="position" type="tns:Position" />
