@@ -5,6 +5,11 @@
   var bwBaseURL = "getWeekends.php";
   var categories = ['Outdoor', 'Sport', 'Family', 'CityLife', 'Culture', 'Nature'];
   var selectedCategories = [];
+  var monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   $("button.category-filter").click(function(e){
     e.preventDefault();
@@ -56,6 +61,22 @@
     });
   });
 
+  $(document).on("click", "a.more", function(e){
+    e.preventDefault();
+    $(this).parent().parent().find("span.text-cutter").hide();
+    $(this).parent().hide();
+    $(this).parent().parent().find(".minimized").slideDown();
+    $(this).parent().parent().find(".less-button").slideDown();
+  });
+
+  $(document).on("click", "a.less", function(e){
+    e.preventDefault();
+    $(this).parent().parent().find("span.text-cutter").show();
+    $(this).parent().hide();
+    $(this).parent().parent().find(".minimized").slideUp();
+    $(this).parent().parent().find(".more-button").slideDown();
+  });
+
   function buildResponsePage(response) {
     var days = response["days"];
     for (var dayIndex in days) {
@@ -85,32 +106,59 @@
         var event = day["events"][eventIndex];
 
         var name = event["name"];
-        var city = event["city"];
-        // var daytime = event["daytime"];
+        var place = event["city"];
+        var locationName = event["locationName"];
         var description = event["description"];
+        var info = event["info"];
+        var address = event["address"];
         var imgURL = event["img"];
-
+        var startDate = new Date(event["start"]);
+        var endDate = new Date(event["end"]);
         var payment = event["payment"];
         var category = event["categories"];
 
         var eventWrapper = $("#event_content").clone();
         eventWrapper.removeAttr("id");
 
-        eventWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + city);
+
+        if (locationName != null && locationName != "") {
+          place += " | " + locationName;
+        }
+        eventWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + place);
         eventWrapper.find(".stuff_date").html(month.substring(0, 3) + " <strong>" + dayNumber + "</strong>");
         eventWrapper.find(".title").text(name);
-        eventWrapper.find(".description").text(description);
         eventWrapper.find(".image-background").attr("style", 'background-image: url("' + imgURL + '")');
 
-        var furtherInfos = category;
-
-        if (payment==false) {
-          furtherInfos += " | Free activity"
+        if (description.length > 200) {
+          eventWrapper.find(".description").prepend(description.slice(0,200)+'<span class="text-cutter">... </span>');
+          eventWrapper.find(".description .description-overflow").text(description.slice(200,description.length));
         } else {
-          furtherInfos += " | Payment required"
+          eventWrapper.find(".description").text(description);
         }
 
-        eventWrapper.find(".further-info p").text(furtherInfos);
+        eventWrapper.find(".event-info").append(info);
+        eventWrapper.find(".location-info").append(locationName + ", " + address);
+
+        var categoryInfos = category;
+
+        if (payment==false) {
+          categoryInfos += " | Free activity"
+        } else {
+          categoryInfos += " | Payment required"
+        }
+
+        eventWrapper.find(".further-info p.category-info").text(categoryInfos);
+
+        if (startDate.getDate()==endDate.getDate() && startDate.getMonth()==endDate.getMonth()) {
+          eventWrapper.find(".further-info p.calendar-info").append(
+            dayNames[startDate.getDay()] + " " + startDate.getDate() + " " + monthNames[startDate.getMonth()]
+          );
+        } else {
+          eventWrapper.find(".further-info p.calendar-info").append(
+            dayNames[startDate.getDay()] + " " + startDate.getDate() + " " + monthNames[startDate.getMonth()] +
+            " - " + dayNames[endDate.getDay()] + " " + endDate.getDate() + " " + monthNames[endDate.getMonth()]
+          );
+        }
 
         eventWrapper.removeClass("hidden");
         dayWrapper.append(eventWrapper);
@@ -133,8 +181,15 @@
         activityWrapper.find(".place").html("<i class=\"fa fa-map-marker\"></i>&nbsp;" + city);
         activityWrapper.find(".stuff_date").html(month.substring(0, 3) + " <strong>" + dayNumber + "</strong>");
         activityWrapper.find(".title").text(name);
-        activityWrapper.find(".description").text(info);
         activityWrapper.find(".image-background").attr("style", 'background-image: url("' + imgURL + '")');
+
+        if (info.length > 200) {
+          activityWrapper.find(".description").prepend(info.slice(0,200)+'<span class="text-cutter">... </span>');
+          activityWrapper.find(".description .description-overflow").text(info.slice(200,info.length));
+        } else {
+          activityWrapper.find(".description").text(info);
+          activityWrapper.find(".more-button").hide();
+        }
 
         var furtherInfos = "";
         switch (daytime) {
@@ -165,6 +220,7 @@
 
     $("#results").removeClass("hidden");
     $("#form").fadeOut(function(){
+      $(window).scrollTop(0);
       $("section#results").fadeIn();
     });
   }
