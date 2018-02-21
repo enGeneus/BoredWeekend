@@ -69,6 +69,7 @@ public class WundergroundServiceClientSpring {
 					forecast.setDayForecast(day, dayForecast);
 				}
 
+				Thread.sleep(3000);
 				return CompletableFuture.completedFuture(forecast);
 
 			}

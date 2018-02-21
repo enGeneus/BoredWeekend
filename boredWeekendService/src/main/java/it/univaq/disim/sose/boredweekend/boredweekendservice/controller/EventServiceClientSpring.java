@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,13 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
 @Service
 class EventServiceClientSpring {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(EventServiceClientSpring.class);
 	
 	@Async
 	public CompletableFuture<List<Event>> getEvent(List<String> city, Date start, Date end){
+		
+		LOGGER.info("Calling event SOAP service");
 		
 		EventsService service = new EventsService();
 		EventsPT port = service.getEventsPort();
@@ -33,6 +39,8 @@ class EventServiceClientSpring {
 		request.setEnd(end);
 		
 		CityEventsResponse response = port.getCityEvents(request);	
+		
+		LOGGER.info("Return event service response");
 		
 		return CompletableFuture.completedFuture(setEvents(response.getEvents()));
 		

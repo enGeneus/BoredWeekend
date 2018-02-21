@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,13 @@ import it.univaq.disim.sose.boredweekend.providers.activitiesservice.WeekDay;
 @Service
 public class ActivityServiceClientSpring{
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityServiceClientSpring.class);
+	
 	@Async
 	public CompletableFuture<List<Activity>> getActivity(List<String> city, List<String> category, List<String> days){
-		
+
+		LOGGER.info("Calling activity SOAP service");
+
 		ActivitiesService service = new ActivitiesService();
 		ActivitiesPT port = service.getActivitiesPort();
 		CityActivitiesRequest request = new CityActivitiesRequest();
@@ -40,6 +46,8 @@ public class ActivityServiceClientSpring{
 		
 		setActivity(response.getActivities());
 		
+		LOGGER.info("Return activity service response");
+
 		return CompletableFuture.completedFuture(setActivity(response.getActivities()));
 	}
 
@@ -77,6 +85,7 @@ public class ActivityServiceClientSpring{
 			
 			activitylist.add(returningActivity);
 		}
+				
 		return activitylist;
 	}
 }
