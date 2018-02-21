@@ -12,6 +12,8 @@ public class Day {
 	private List<Event> events;
 	private List<Activity> activities;
 
+	private Date fullDate;
+
 	private String dayNumber;
 	private String day;
 	private String monthNumber;
@@ -20,6 +22,8 @@ public class Day {
 	public Day(Date date) {
 		this.events = new ArrayList<>();
 		this.activities = new ArrayList<>();
+
+		this.fullDate = date;
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-EEEE-MM-MMMMM", Locale.ENGLISH);
 		String stringDate = dateFormat.format(date);
@@ -37,6 +41,14 @@ public class Day {
 			}
 		}
 		return false;
+	}
+
+	public Date getFullDate() {
+		return fullDate;
+	}
+
+	public void setFullDate(Date fullDate) {
+		this.fullDate = fullDate;
 	}
 
 	public String getDayNumber() {

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.util.CalendarOrder;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.DateUtils;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServiceUtils;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesPT;
@@ -187,8 +189,13 @@ public class BoredWeekendProsumerCore {
 		}
 		
 		Weekend weekend = new Weekend();
-
-		weekend.getDays().addAll(days.values());
+		
+		//sorting days
+		List<Day> daylist = new ArrayList<>(days.values());
+		Collections.sort(daylist, new CalendarOrder());
+		
+		weekend.getDays().addAll(daylist);
+		
 
 		return weekend;
 	}
