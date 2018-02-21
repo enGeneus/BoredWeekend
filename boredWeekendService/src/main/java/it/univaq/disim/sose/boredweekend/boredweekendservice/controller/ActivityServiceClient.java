@@ -21,11 +21,10 @@ class ActivityServiceClient extends Thread {
 	private String daytime;
 	private List<Activity> activity = new ArrayList<>();
 	
-	public ActivityServiceClient(List<String> city, List<String> category, List<String> day, String daytime) {
+	public ActivityServiceClient(List<String> city, List<String> category, List<String> day) {
 		this.city = city;
 		this.category = category;
 		this.day = day;
-		this.daytime = daytime;
 	}
 	
 	public List<Activity> getActivity() {
@@ -45,7 +44,6 @@ class ActivityServiceClient extends Thread {
 			returningActivity.setPayment(activity.isPayment());
 			returningActivity.setState(activity.isState());
 			returningActivity.setImg(activity.getImg());
-			returningActivity.setDaytime(activity.getDaytime().value());
 			returningActivity.setLat(activity.getPosition().getLatitude());
 			returningActivity.setLon(activity.getPosition().getLongitude());
 
@@ -72,7 +70,6 @@ class ActivityServiceClient extends Thread {
 		ActivitiesService service = new ActivitiesService();
 		ActivitiesPT port = service.getActivitiesPort();
 		CityActivitiesRequest request = new CityActivitiesRequest();
-		request.setDaytime(Daytime.fromValue(this.daytime));
 
 		for (String a : this.city) {
 			request.getCity().add(a);

@@ -20,7 +20,6 @@
 					<xsd:element name="city" type="xsd:string" maxOccurs="unbounded" />
 					<xsd:element name="category" type="tns:ActivityCategory" minOccurs="0" maxOccurs="6"/>
 					<xsd:element name="day" type="tns:WeekDay" maxOccurs="7" />
-					<xsd:element name="daytime" type="tns:Daytime" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:complexType>
 

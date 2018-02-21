@@ -217,7 +217,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 	}
 
 	@Override
-	public List<Activity> find(List<String> city, List<String> categories, List<String> days, String daytime) {
+	public List<Activity> find(List<String> city, List<String> categories, List<String> days) {
 
 		// inizio costruzione query
 		

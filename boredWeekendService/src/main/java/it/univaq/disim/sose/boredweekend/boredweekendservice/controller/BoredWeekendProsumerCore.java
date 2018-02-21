@@ -44,7 +44,7 @@ public class BoredWeekendProsumerCore {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendProsumerCore.class);
 
-	public Weekend buildWeekend(String city, Date startDate, Date endDate, List<String> preferences, String daytime, int distance) {
+	public Weekend buildWeekend(String city, Date startDate, Date endDate, List<String> preferences, int distance) {
 		LOGGER.info("BoredWeekend is handling the getWeekends request in its core");
 
 		LOGGER.info("Retreiving coordinates of city " + city);
@@ -67,7 +67,7 @@ public class BoredWeekendProsumerCore {
 		List<String> days = DateUtils.getWeekdaysInInterval(startDate, endDate);
 
 		//Starting threads for activities and events
-		ActivityServiceClient activityService = new ActivityServiceClient(nearbyCities, preferences, days, daytime);
+		ActivityServiceClient activityService = new ActivityServiceClient(nearbyCities, preferences, days);
 		activityService.run();
 
 		EventServiceClient eventService = new EventServiceClient(nearbyCities, startDate, endDate);

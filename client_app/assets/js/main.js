@@ -41,7 +41,6 @@
       method: "GET",
       dataType: "json",
       data: {
-        "daytime": "FullDay",
         "where": cityValue,
         "start": fromDateValue,
         "end": endDateValue,

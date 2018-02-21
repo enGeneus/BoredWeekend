@@ -38,8 +38,7 @@ public class BoredWeekendRestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getWeekends")
 	public Weekend getWeekends(@QueryParam("where") String city, @QueryParam("start") String start,
-			@QueryParam("end") String end, @QueryParam("preferences") String preferences,
-			@QueryParam("daytime") String daytime, @QueryParam("traveldistance") int distance) {
+			@QueryParam("end") String end, @QueryParam("preferences") String preferences, @QueryParam("traveldistance") int distance) {
 
 		LOGGER.info("Received getWeekends request");
 
@@ -48,7 +47,7 @@ public class BoredWeekendRestService {
 
 		List<String> preferencesList = DateUtils.extractListFromConcatenatedValues(preferences);
 
-		Weekend weekend = prosumerCore.buildWeekend(city, startDate, endDate, preferencesList, daytime, distance);
+		Weekend weekend = prosumerCore.buildWeekend(city, startDate, endDate, preferencesList, distance);
 
 		ObjectWriter ow = new ObjectMapper().writer();
 

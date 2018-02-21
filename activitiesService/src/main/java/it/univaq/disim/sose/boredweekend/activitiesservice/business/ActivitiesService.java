@@ -8,5 +8,5 @@ public interface ActivitiesService {
 
 	void storeActivity(Activity activity);
 
-	List<Activity> getActivity(List<String> city, List<String> category, List<String> day, String daytime);
+	List<Activity> getActivity(List<String> city, List<String> category, List<String> day);
 }
