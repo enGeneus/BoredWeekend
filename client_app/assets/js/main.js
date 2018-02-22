@@ -30,6 +30,10 @@
   $("button.submit").click(function(e){
     e.preventDefault();
 
+    $("#form").hide();
+    $(window).scrollTop(0);
+    $("#loading").fadeIn();
+
     var cityValue = $("#input-city").val();
     var fromDateValue = $("#input-startdate").val();
     var endDateValue = $("#input-enddate").val();
@@ -57,6 +61,9 @@
       },
       error: function(xhr) {
         alert("Error " + xhr.status);
+        $("#loading").hide();
+        $(window).scrollTop(0);
+        $("#form").fadeIn();
       }
     });
   });
@@ -75,6 +82,15 @@
     $(this).parent().hide();
     $(this).parent().parent().find(".minimized").slideUp();
     $(this).parent().parent().find(".more-button").slideDown();
+  });
+
+  $(document).on("click", "a.back-button", function(e){
+    e.preventDefault();
+    var results = $("#results .day-contents");
+    $("#results").fadeOut(function() {
+      results.remove();
+      $("#form").fadeIn();
+    })
   });
 
   function buildResponsePage(response) {
@@ -142,7 +158,7 @@
         var categoryInfos = category;
 
         if (payment==false) {
-          categoryInfos += " | Free activity"
+          categoryInfos += " | Free event"
         } else {
           categoryInfos += " | Payment required"
         }
@@ -218,11 +234,8 @@
       dayWrapper.removeClass("hidden");
     }
 
-    $("#results").removeClass("hidden");
-    $("#form").fadeOut(function(){
-      $(window).scrollTop(0);
-      $("section#results").fadeIn();
-    });
+    $("#loading").hide();
+    $("section#results").fadeIn();
   }
 
 })(jQuery);
