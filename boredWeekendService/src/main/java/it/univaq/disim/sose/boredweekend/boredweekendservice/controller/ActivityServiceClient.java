@@ -1,86 +1,54 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ModelUtils;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesPT;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivitiesService;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivityCategory;
-import it.univaq.disim.sose.boredweekend.providers.activitiesservice.ActivityType;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.CityActivitiesRequest;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.CityActivitiesResponse;
 import it.univaq.disim.sose.boredweekend.providers.activitiesservice.WeekDay;
 
-class ActivityServiceClient extends Thread {
+@Service
+public class ActivityServiceClient{
 	
-	private List<String> city;
-	private List<String> category;
-	private List<String> day;
-	private List<Activity> activity = new ArrayList<>();
+	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityServiceClient.class);
 	
-	public ActivityServiceClient(List<String> city, List<String> category, List<String> day) {
-		this.city = city;
-		this.category = category;
-		this.day = day;
-	}
-	
-	public List<Activity> getActivity() {
-		return this.activity;
-	}
-	
-	public void setActivity(List<ActivityType> response) {
-		
-		for (ActivityType activity : response) {
-			
-			Activity returningActivity = new Activity();
-			
-			returningActivity.setId(activity.getId());
-			returningActivity.setName(activity.getName());
-			returningActivity.setInfo(activity.getInfo());
-			returningActivity.setCity(activity.getCity());
-			returningActivity.setPayment(activity.isPayment());
-			returningActivity.setState(activity.isState());
-			returningActivity.setImg(activity.getImg());
-			returningActivity.setLat(activity.getPosition().getLatitude());
-			returningActivity.setLon(activity.getPosition().getLongitude());
+	@Async
+	public CompletableFuture<List<Activity>> getActivity(List<String> city, List<String> category, List<String> days){
 
-			List<String> categories = new ArrayList<>();
+		LOGGER.info("Calling activity SOAP service");
 
-			for (ActivityCategory category : activity.getCategory()) {
-				categories.add(category.value());
-			}
-			returningActivity.setCategories(categories);
-			
-			List<String> days = new ArrayList<>();
-
-			for (WeekDay day : activity.getDays()) {
-				days.add(day.value());
-			}
-			returningActivity.setDays(days);			
-			
-			this.activity.add(returningActivity);
-
-		}
-	}
-	
-	public void run() {
 		ActivitiesService service = new ActivitiesService();
 		ActivitiesPT port = service.getActivitiesPort();
 		CityActivitiesRequest request = new CityActivitiesRequest();
 
-		for (String a : this.city) {
+		for (String a : city) {
 			request.getCity().add(a);
 		}
 		
-		for(String cat : this.category) {
+		for(String cat : category) {
 			request.getCategory().add(ActivityCategory.fromValue(cat));
 		}
-		for(String day : this.day) {
+		for(String day : days) {
 			request.getDay().add(WeekDay.fromValue(day));
 		}
-		CityActivitiesResponse response = port.getCityActivities(request);		
-		setActivity(response.getActivities());
 
+		CityActivitiesResponse response = port.getCityActivities(request);		
+		
+		List<Activity> activities = ModelUtils.transformActivityType(response.getActivities());
+
+		LOGGER.info("Returning activity service response");
+
+		return CompletableFuture.completedFuture(activities);
 	}
+
 }

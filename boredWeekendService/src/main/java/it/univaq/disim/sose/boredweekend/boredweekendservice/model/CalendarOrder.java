@@ -1,8 +1,6 @@
-package it.univaq.disim.sose.boredweekend.boredweekendservice.util;
+package it.univaq.disim.sose.boredweekend.boredweekendservice.model;
 
 import java.util.Comparator;
-
-import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
 
 public class CalendarOrder implements Comparator<Day> {
 

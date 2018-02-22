@@ -5,40 +5,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.ForecastInfo;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.util.ProviderServiceUtils;
 
-public class WundergroundServiceClient extends Thread {
+@Service
+public class WundergroundServiceClient {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WundergroundServiceClient.class);
-
-	private ForecastInfo forecast;
-
-	private double lat;
-	private double lon;
-
-	public WundergroundServiceClient(double lat, double lon) {
-		this.lat = lat;
-		this.lon = lon;
-	}
-
-	public ForecastInfo getForecast() {
-		return forecast;
-	}
-
-	@Override
-	public void run() {
-		LOGGER.info("Started new tread for calling weather service");
-		this.forecast = callForecastService(this.lat, this.lon);
-	}
-
-	private ForecastInfo callForecastService(double lat, double lon) {
+	
+	@Async
+	public  CompletableFuture<ForecastInfo> getForecastInfo(double lat, double lon){
 		try {
 			LOGGER.info("Calling weather service");
 			String forecastStringUrl = ProviderServiceUtils.buildWundergroundRequestURL(lat, lon);
@@ -84,7 +69,8 @@ public class WundergroundServiceClient extends Thread {
 					forecast.setDayForecast(day, dayForecast);
 				}
 
-				return forecast;
+				LOGGER.info("Returning weather service response");
+				return CompletableFuture.completedFuture(forecast);
 
 			}
 

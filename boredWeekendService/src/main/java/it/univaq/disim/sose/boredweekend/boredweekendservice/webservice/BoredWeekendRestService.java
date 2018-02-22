@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.BoredWeekendProsumerCore;
-import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.GoogleMapsGeocodeServiceClient;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Event;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Weekend;
@@ -66,11 +65,6 @@ public class BoredWeekendRestService {
 	public void insert(Activity activity) {
 		
 		LOGGER.info("Received insertActivity request");
-		
-		double[] latLon = GoogleMapsGeocodeServiceClient.callService(activity.getCity());
-		activity.setLat(latLon[0]);
-		activity.setLon(latLon[1]);
-
 		prosumerCore.insertActivity(activity);
 	}
 
