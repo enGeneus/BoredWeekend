@@ -44,9 +44,7 @@ public class ActivityServiceClientSpring{
 		}
 		CityActivitiesResponse response = port.getCityActivities(request);		
 		
-		setActivity(response.getActivities());
-		
-		LOGGER.info("Return activity service response");
+		LOGGER.info("Returning activity service response");
 
 		return CompletableFuture.completedFuture(setActivity(response.getActivities()));
 	}
@@ -63,6 +61,7 @@ public class ActivityServiceClientSpring{
 			returningActivity.setName(activity.getName());
 			returningActivity.setInfo(activity.getInfo());
 			returningActivity.setCity(activity.getCity());
+			returningActivity.setDaytime(activity.getDaytime().value());
 			returningActivity.setPayment(activity.isPayment());
 			returningActivity.setState(activity.isState());
 			returningActivity.setImg(activity.getImg());

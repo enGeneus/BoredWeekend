@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
@@ -43,6 +44,7 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsPT;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
 @Component
+@EnableAsync
 public class BoredWeekendProsumerCore {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoredWeekendProsumerCore.class);
@@ -60,7 +62,7 @@ public class BoredWeekendProsumerCore {
 		LOGGER.info("BoredWeekend is handling the getWeekends request in its core");
 
 		LOGGER.info("Retreiving coordinates of city " + city);
-		double[] latlon = callMapsGeocodeService(city);
+		double[] latlon = GoogleMapsGeocodeServiceClient.callService(city);
 
 		LOGGER.debug("Coordinates: " + latlon[0] + "," + latlon[1]);
 
@@ -117,6 +119,7 @@ public class BoredWeekendProsumerCore {
 		}
 
 		Weekend weekend = composeData(activities, events, forecast, startDate, endDate);
+		LOGGER.info("Returning weekend");
 		return weekend;
 	}
 
@@ -227,56 +230,6 @@ public class BoredWeekendProsumerCore {
 		
 
 		return weekend;
-	}
-
-
-	private double[] callMapsGeocodeService(String cityName) {
-		double[] latlon = new double[2];
-
-		try {
-			LOGGER.info("Calling maps geocode service");
-			String mapsGeocodeStringUrl = ProviderServiceUtils.buildMapsGeocodeURL(cityName);
-
-			LOGGER.info("URL: " + mapsGeocodeStringUrl);
-
-			URL mapsGeocodeUrl = new URL(mapsGeocodeStringUrl);
-			HttpURLConnection c = (HttpURLConnection) mapsGeocodeUrl.openConnection();
-			c.setRequestMethod("GET");
-			c.setRequestProperty("Content-length", "0");
-			c.setUseCaches(false);
-			c.setAllowUserInteraction(false);
-			c.connect();
-			int status = c.getResponseCode();
-
-			switch (status) {
-			case 200:
-			case 201:
-				BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream(), "UTF-8"));
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while ((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
-
-				if (c != null) {
-					c.disconnect();
-				}
-
-				JSONObject response = new JSONObject(sb.toString());
-
-				LOGGER.debug(response.toString());
-
-				JSONObject location = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry")
-						.getJSONObject("location");
-				latlon[0] = location.getDouble("lat");
-				latlon[1] = location.getDouble("lng");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return latlon;
 	}
 
 	private List<String> callGeoNamesService(double lat, double lon, int radius) {

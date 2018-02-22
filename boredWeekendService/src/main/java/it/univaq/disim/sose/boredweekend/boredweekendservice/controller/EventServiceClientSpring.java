@@ -40,7 +40,7 @@ class EventServiceClientSpring {
 		
 		CityEventsResponse response = port.getCityEvents(request);	
 		
-		LOGGER.info("Return event service response");
+		LOGGER.info("Returning event service response");
 		
 		return CompletableFuture.completedFuture(setEvents(response.getEvents()));
 		

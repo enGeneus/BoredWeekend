@@ -69,7 +69,8 @@ public class WundergroundServiceClientSpring {
 					forecast.setDayForecast(day, dayForecast);
 				}
 
-				Thread.sleep(3000);
+				Thread.sleep(10000);
+				LOGGER.info("Returning weather service response");
 				return CompletableFuture.completedFuture(forecast);
 
 			}
