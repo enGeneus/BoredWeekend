@@ -15,8 +15,7 @@ public class Event {
 	private String locationName;
 	private String img;
 	private boolean payment;
-
-	String category;
+    private String category;
 	
 	public String getInfo() {
 		return info;

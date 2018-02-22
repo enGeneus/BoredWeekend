@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -28,7 +26,6 @@ public class JDBCEventsDAO implements EventsDAO {
 
 	// nomi tabelle BW_events
 	private static final String EVENTS = "events";
-	private static final String CATEGORY_TYPE = "category_type";
 
 	// nomi colonne tabella events
 	private static final String ID_COLUMN = "id_event";
@@ -42,9 +39,6 @@ public class JDBCEventsDAO implements EventsDAO {
 	private static final String DESCRIPTION_COLUMN = "description";
 	private static final String INFO_COLUMN = "info";
 	private static final String ADDRESS_COLUMN = "address";
-
-	// nomi colonne tabella category
-	private static final String FK_ACTIVITIES_ID_CATEGORY = "id_event";
 	private static final String CATEGORY_COLUMN = "category";
 
 	@Autowired
@@ -55,53 +49,31 @@ public class JDBCEventsDAO implements EventsDAO {
 
 		String query = "INSERT INTO `" + EVENTS + "`(`" + NAME_COLUMN + "`,`" + INFO_COLUMN + "`,`" + ADDRESS_COLUMN
 				+ "`, `" + CITY_COLUMN + "`, `" + START_COLUMN + "`, `" + END_COLUMN + "`, `"
-				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`)"
+				+ PAYMENT_COLUMN + "`, `" + IMG_COLUMN + "`, `" + LOCATION_COLUMN + "`, `" + DESCRIPTION_COLUMN + "`, `"+CATEGORY_COLUMN+"`)"
 				+ " VALUES ('" + event.getName().replace("'", "\\'") + "','" + event.getInfo().replace("'", "\\'")
 				+ "','" + event.getAddress().replace("'", "\\'") + "','" + event.getCity().replace("'", "\\'") + "','"
 				+ Utility.date2Mysql(event.getStart()) + "','" + Utility.date2Mysql(event.getEnd()) + "',"
 				+ event.isPayment() + ",'" + event.getImg().replace("'", "\\'") + "','" + event.getLocationName().replace("'", "\\'") + "','"
-				+ event.getDescription().replace("'", "\\'") + "')";
+				+ event.getDescription().replace("'", "\\'") +"','"+event.getCategories().replace("'", "\\'") + "')";
 
-		// dobbiamo fare i controlli sulle caratteristiche dell'evento?
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;
 
 		try {
 
-			int risultato = -1;
 			con = dataSource.getConnection();
 
 			st = con.createStatement();
-			st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			st.executeUpdate(query);
 
-			rs = st.getGeneratedKeys();
-			if (rs.next()) {
-				risultato = rs.getInt(1);
-			}
+			
+			LOGGER.info("Activity DAO is going to perform the query: " + query);
 
-			String category = event.getCategories();
-
-			String query_category = "INSERT INTO `" + CATEGORY_TYPE + "`(`" + FK_ACTIVITIES_ID_CATEGORY + "`, `"
-					+ CATEGORY_COLUMN + "`) VALUES (" + risultato + ",'" + category + "')";
-
-			LOGGER.info("Activity DAO is going to perform the query: " + query_category);
-
-			st.executeUpdate(query_category);
-
-			rs.close();
 			st.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
 			if (st != null) {
 				try {
 					st.close();
@@ -122,14 +94,13 @@ public class JDBCEventsDAO implements EventsDAO {
 	@Override
 	public List<Event> find(List<String> city, Date start, Date end) {
 		
-		String sql_init0 = "SELECT a.*, c." + CATEGORY_COLUMN + " FROM " + EVENTS + " as a JOIN " + CATEGORY_TYPE
-				+ " as c ON a." + ID_COLUMN + "=c." + FK_ACTIVITIES_ID_CATEGORY + " WHERE (";
+		String sql_init0 = "SELECT * FROM " + EVENTS +" WHERE (";
 		
 		for(String citys : city) {
 			if(city.size() == 1) {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
+				sql_init0 = sql_init0+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
 			} else {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
+				sql_init0 = sql_init0+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
 			}	
 		}
 		
@@ -141,8 +112,8 @@ public class JDBCEventsDAO implements EventsDAO {
 			 sql_init = sql_init0;
 		}
 		
-		sql_init = sql_init+") AND a." + START_COLUMN + " >= '" + Utility.date2Mysql(start)
-		+ "' AND a." + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
+		sql_init = sql_init+") AND " + START_COLUMN + " >= '" + Utility.date2Mysql(start)
+		+ "' AND " + END_COLUMN + " <= '" + Utility.date2Mysql(end) + "'";
 
 		// sql_init contiene la query del giusto formato
 
@@ -152,44 +123,17 @@ public class JDBCEventsDAO implements EventsDAO {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-
-		// utilizziamo questa map per controllare che l'attività non sia già stata
-		// inserita nel result
-		Map<Integer, Event> eventMap = new HashMap<>();
-
-		// liste di map che rispettivamente conterranno giorni e categorie delle righe
-		// del result set
-		List<Map<Integer, String>> listMap = new ArrayList<>();
-
+		
 		try {
 			con = dataSource.getConnection();
 			st = con.createStatement();
 			rs = st.executeQuery(sql_init);
 
-			// popolazione della lista di giorni e categorie
-			while (rs.next()) {
-				Map<Integer, String> mapCategory = new HashMap<>();
-				mapCategory.put(rs.getInt(ID_COLUMN), rs.getString(CATEGORY_COLUMN));
-				listMap.add(mapCategory);
-			}
-
-			// serve per far ripuntare alla prima locazione del result set
-			rs.beforeFirst();
-
+			
 			// popolazione della lista di attività da ritornare
 			while (rs.next()) {
 				// controllo che l'attività con quell'id non sia già stata inserita, se si
 				// scarto la riga
-				if (!eventMap.containsKey(rs.getInt(ID_COLUMN))) {
-
-					List<String> category_list = new ArrayList<>();
-
-					for (Map<Integer, String> m : listMap) {
-						if (m.containsKey(rs.getInt(ID_COLUMN))
-								&& !category_list.contains(m.get(rs.getInt(ID_COLUMN)))) {
-							category_list.add(m.get(rs.getInt(ID_COLUMN)));
-						}
-					}
 
 					Event event = new Event();
 
@@ -204,11 +148,10 @@ public class JDBCEventsDAO implements EventsDAO {
 					event.setLocationName(rs.getString(LOCATION_COLUMN));
 					event.setAddress(rs.getString(ADDRESS_COLUMN));
 					event.setInfo(rs.getString(INFO_COLUMN));
-					event.setCategory(category_list.get(0));
-					eventMap.put(rs.getInt(ID_COLUMN), event);
+					event.setCategory(rs.getString(CATEGORY_COLUMN));
 					result.add(event);
 
-				}
+				
 
 			}
 
