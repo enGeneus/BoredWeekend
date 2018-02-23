@@ -1,4 +1,4 @@
-package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
+package it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

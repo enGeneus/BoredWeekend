@@ -15,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers.ActivityServiceClient;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers.GeonamesServiceClient;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers.GoogleMapsGeocodeServiceClient;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers.WundergroundServiceClient;
+import it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers.EventServiceClient;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Activity;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.CalendarOrder;
 import it.univaq.disim.sose.boredweekend.boredweekendservice.model.Day;
@@ -165,7 +170,6 @@ public class BoredWeekendProsumerCore {
 			}
 			for (Date eventDay : eventDays) {
 				String dayRepresentation = DateUtils.getDateSimpleRepresentation(eventDay);
-				System.out.println("Event day: " + dayRepresentation);
 				if (days.containsKey(dayRepresentation)) {
 					days.get(dayRepresentation).getEvents().add(event);
 				}

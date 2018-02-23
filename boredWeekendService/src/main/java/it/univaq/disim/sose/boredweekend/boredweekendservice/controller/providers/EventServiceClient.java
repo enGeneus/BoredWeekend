@@ -1,4 +1,4 @@
-package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
+package it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,7 @@ import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsPT;
 import it.univaq.disim.sose.boredweekend.providers.eventsservice.EventsService;
 
 @Service
-class EventServiceClient {
+public class EventServiceClient {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EventServiceClient.class);
 	

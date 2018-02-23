@@ -1,4 +1,4 @@
-package it.univaq.disim.sose.boredweekend.boredweekendservice.controller;
+package it.univaq.disim.sose.boredweekend.boredweekendservice.controller.providers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
