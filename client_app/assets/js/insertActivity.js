@@ -82,7 +82,9 @@
       },
 
       success: function(response) {
-    	  	alert("aggiunto");
+    	  if(response.status === "success") {
+    	  	  	alert("Activity added");
+    	  	}
       },
       error: function(xhr) {
         alert("Error " + xhr.responseText);

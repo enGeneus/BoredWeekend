@@ -11,5 +11,8 @@
 	);
 	$context  = stream_context_create($options);
 	file_get_contents($baseURL, false, $context);
-	
+	echo json_encode(array(
+    'status' => 'success',
+    'message'=> 'success message'
+    ));
 ?>
