@@ -160,8 +160,12 @@ public class BoredWeekendProsumerCore {
 		// Add events to each day
 		for (Event event : events) {
 			List<Date> eventDays = DateUtils.getDaysBetweenDates(event.getStart(), event.getEnd());
+			if (eventDays.isEmpty()) {
+				eventDays.add(event.getStart());
+			}
 			for (Date eventDay : eventDays) {
 				String dayRepresentation = DateUtils.getDateSimpleRepresentation(eventDay);
+				System.out.println("Event day: " + dayRepresentation);
 				if (days.containsKey(dayRepresentation)) {
 					days.get(dayRepresentation).getEvents().add(event);
 				}

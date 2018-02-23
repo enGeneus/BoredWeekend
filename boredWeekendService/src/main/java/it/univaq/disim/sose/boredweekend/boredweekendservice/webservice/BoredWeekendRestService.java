@@ -1,6 +1,5 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.webservice;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -13,8 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +40,7 @@ public class BoredWeekendRestService {
 		LOGGER.info("Received getWeekends request");
 
 		Date startDate = DateUtils.getDateFromString(start, "yyy-MM-dd");
-		Date endDate = DateUtils.getDateFromString(end, "yyy-MM-dd");
+		Date endDate = DateUtils.getDateFromString(end + "T23:59:59", "yyy-MM-dd'T'hh:mm:ss");
 
 		String[] values = preferences.split(",");
 		List<String> preferencesList = Arrays.asList(values);

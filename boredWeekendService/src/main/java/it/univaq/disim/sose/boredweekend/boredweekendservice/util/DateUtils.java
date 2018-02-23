@@ -87,7 +87,6 @@ public class DateUtils {
 	        dates.add(result);
 	        calendar.add(Calendar.DATE, 1);
 	    }
-	    dates.add(calendar.getTime());
 	    return dates;
 	}
 
