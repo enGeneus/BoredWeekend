@@ -74,7 +74,7 @@ public class ActivitiesPTImpl implements ActivitiesPT{
 		}
 
 
-		List<Activity> activities = service.getActivity(parameters.getCity(), categories, days);
+		List<Activity> activities = service.getActivities(parameters.getCity(), categories, days);
 
 		CityActivitiesResponse response = new CityActivitiesResponse();
 

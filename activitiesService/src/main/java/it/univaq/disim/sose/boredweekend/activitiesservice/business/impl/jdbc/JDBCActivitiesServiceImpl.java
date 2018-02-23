@@ -22,7 +22,7 @@ public class JDBCActivitiesServiceImpl implements ActivitiesService {
 	}
 
 	@Override
-	public List<Activity> getActivity(List<String> city, List<String> category, List<String> day) {
+	public List<Activity> getActivities(List<String> city, List<String> category, List<String> day) {
 		return activityDAO.find(city, category, day);
 	}
 

@@ -7,7 +7,7 @@ import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Event;
 
 public interface EventsService {
 
-	void storeEvent(Event event);
+	public void storeEvent(Event event);
 
-	List<Event> getEvents(List<String> city, Date start, Date end);
+	public List<Event> getEvents(List<String> cities, Date start, Date end);
 }

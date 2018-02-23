@@ -10,14 +10,11 @@ import it.univaq.disim.sose.boredweekend.eventsservice.business.EventsDAO;
 import it.univaq.disim.sose.boredweekend.eventsservice.business.EventsService;
 import it.univaq.disim.sose.boredweekend.eventsservice.business.model.Event;
 
-
-
 @Service
 public class JDBCEventsServiceImpl implements EventsService {
-	
+
 	@Autowired
 	private EventsDAO eventDAO;
-
 
 	@Override
 	public List<Event> getEvents(List<String> city, Date start, Date end) {
@@ -27,7 +24,7 @@ public class JDBCEventsServiceImpl implements EventsService {
 
 	@Override
 	public void storeEvent(Event event) {
-		eventDAO.insert(event);		
+		eventDAO.insert(event);
 	}
 
 }

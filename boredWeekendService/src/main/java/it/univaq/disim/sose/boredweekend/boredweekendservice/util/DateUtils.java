@@ -13,11 +13,6 @@ public class DateUtils {
 
 	private static final String[] DAYLIST = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
-	public static List<String> extractListFromConcatenatedValues(String concatenatedValues) {
-		String[] values = concatenatedValues.split(",");
-		return Arrays.asList(values);
-	}
-
 	public static Date getDateFromString(String inputString, String pattern) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern); 
 		Date date = null;
@@ -81,7 +76,6 @@ public class DateUtils {
 			return weekdays;
 		}
 	}
-
 
 	public static List<Date> getDaysBetweenDates(Date startDate, Date endDate) {
 	    List<Date> dates = new ArrayList<Date>();

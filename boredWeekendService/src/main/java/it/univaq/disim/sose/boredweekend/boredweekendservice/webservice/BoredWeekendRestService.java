@@ -1,6 +1,7 @@
 package it.univaq.disim.sose.boredweekend.boredweekendservice.webservice;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,17 +45,10 @@ public class BoredWeekendRestService {
 		Date startDate = DateUtils.getDateFromString(start, "yyy-MM-dd");
 		Date endDate = DateUtils.getDateFromString(end, "yyy-MM-dd");
 
-		List<String> preferencesList = DateUtils.extractListFromConcatenatedValues(preferences);
+		String[] values = preferences.split(",");
+		List<String> preferencesList = Arrays.asList(values);
 
 		Weekend weekend = prosumerCore.buildWeekend(city, startDate, endDate, preferencesList, distance);
-
-		ObjectWriter ow = new ObjectMapper().writer();
-
-		try {
-			LOGGER.debug(ow.writeValueAsString(weekend));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		return weekend;
 	}

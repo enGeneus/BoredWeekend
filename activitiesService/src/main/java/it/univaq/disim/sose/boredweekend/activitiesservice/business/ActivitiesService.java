@@ -6,7 +6,7 @@ import it.univaq.disim.sose.boredweekend.activitiesservice.business.model.Activi
 
 public interface ActivitiesService {
 
-	void storeActivity(Activity activity);
+	public void storeActivity(Activity activity);
 
-	List<Activity> getActivity(List<String> city, List<String> category, List<String> day);
+	public List<Activity> getActivities(List<String> cities, List<String> category, List<String> day);
 }

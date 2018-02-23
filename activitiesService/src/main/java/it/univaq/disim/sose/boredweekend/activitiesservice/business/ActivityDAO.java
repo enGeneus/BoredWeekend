@@ -10,6 +10,6 @@ public interface ActivityDAO {
 
 	public Activity find(int id);
 
-	public List<Activity> find(List<String> city, List<String> category, List<String> day);
+	public List<Activity> find(List<String> cities, List<String> category, List<String> day);
 
 }

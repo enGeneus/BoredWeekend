@@ -85,22 +85,22 @@ public class JDBCActivityDAO implements ActivityDAO {
 	        List<String> categories = activity.getCategories();
 	     
 	        for(String cateory : categories) {
-		        String query_category = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+generatedKey+",'"+cateory+"')";
+		        String categoriesQuery = "INSERT INTO `"+CATEGORY_TYPE+"`(`"+FK_ACTIVITIES_ID_CATEGORY+"`, `"+CATEGORY_COLUMN+"`) VALUES ("+generatedKey+",'"+cateory+"')";
 
-		        LOGGER.info("ActivityDAO is going to perform the query " + query_category);
+		        LOGGER.info("ActivityDAO is going to perform the query " + categoriesQuery);
 
-		        st.executeUpdate(query_category);
+		        st.executeUpdate(categoriesQuery);
 	        }
 	            
 	        //Insert days for the activity
 	        List<String> days = activity.getDays();
 	        
 	        for(String day : days) {
-		        String query_days = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+generatedKey+",'"+day+"')";
+		        String daysQuery = "INSERT INTO `"+ACTIVITIES_DAYS+"`(`"+FK_ACTIVITIES_ID_DAYS+"`, `"+DAY_COLUMN+"`) VALUES ("+generatedKey+",'"+day+"')";
 
-		        LOGGER.info("ActivityDAO is going to perform the query " + query_days);
+		        LOGGER.info("ActivityDAO is going to perform the query " + daysQuery);
 
-		        st.executeUpdate(query_days);
+		        st.executeUpdate(daysQuery);
 	        }
 	        		   
 		} catch (SQLException e) {
@@ -133,9 +133,9 @@ public class JDBCActivityDAO implements ActivityDAO {
 	@Override
 	public Activity find(int id) {
 		// Query for activity find
-		String sql_init = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+ID_COLUMN+" ='"+id+"'";	
+		String sqlQuery = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE a."+ID_COLUMN+" ='"+id+"'";	
 
-		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
+		LOGGER.info("Activity DAO is going to perform the query: " + sqlQuery);
 
 		Connection con = null;
 		Statement st = null;
@@ -148,7 +148,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 		try {
 			con = dataSource.getConnection();
 			st = con.createStatement();
-			rs = st.executeQuery(sql_init);
+			rs = st.executeQuery(sqlQuery);
 			
 			// Populate category and days sets
 			while(rs.next()) {
@@ -216,47 +216,43 @@ public class JDBCActivityDAO implements ActivityDAO {
 	public List<Activity> find(List<String> city, List<String> categories, List<String> days) {
 
 		// Start building query
-		String sql_init0 = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE (";	
+		String sqlQuery = "SELECT a.*, b."+DAY_COLUMN+", c."+CATEGORY_COLUMN+" FROM "+ACTIVITIES+" as a JOIN "+ACTIVITIES_DAYS+" as b JOIN "+CATEGORY_TYPE+" as c ON a."+ID_COLUMN+"=b."+FK_ACTIVITIES_ID_DAYS+" AND a."+ID_COLUMN+"=c."+FK_ACTIVITIES_ID_CATEGORY+" WHERE (";	
 
 		// Add where condition for cities
 		for(String citys : city) {
 			if(city.size() == 1) {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
+				sqlQuery = sqlQuery+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'";
 			} else {
-				sql_init0 = sql_init0+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
+				sqlQuery = sqlQuery+" a."+CITY_COLUMN+" ='"+citys.replace("'", "\\'")+"'"+" OR ";				
 			}	
 		}
-		String  sql_init;
 		
 		// Remove last "OR" occurrence and close parenthesis
 		if(city.size() > 1) {
-			 sql_init = sql_init0.substring(0, sql_init0.length()-4);
-		}else {
-			 sql_init = sql_init0;
+			sqlQuery = sqlQuery.substring(0, sqlQuery.length()-4);
 		}
-		sql_init = sql_init + ")";
+		sqlQuery = sqlQuery + ")";
 
-		// Add where condition for days
+		// Add WHERE condition for days
 		if(!days.isEmpty()) {
-			sql_init += " AND (";		
-			String sql_day = sql_init;
+			sqlQuery += " AND (";		
+			String sql_day = sqlQuery;
 			for(int i =0; i<days.size();i++) {
 				sql_day = sql_day+"b."+DAY_COLUMN+"='"+days.get(i)+"' OR ";
 			}
-			sql_init = sql_day.substring(0, sql_day.length()-4)+")";						
+			sqlQuery = sql_day.substring(0, sql_day.length()-4)+")";						
 		}
 		
 		// Add where condition for categories
 		if(!categories.isEmpty()) {
-			sql_init += " AND (";
-			String sql_category = sql_init;
+			sqlQuery += " AND (";
 			for(int i =0; i<categories.size();i++) {
-				sql_category = sql_category+"c."+CATEGORY_COLUMN+"='"+categories.get(i)+"' OR ";
+				sqlQuery = sqlQuery+"c."+CATEGORY_COLUMN+"='"+categories.get(i)+"' OR ";
 			}
-			sql_init = sql_category.substring(0, sql_category.length()-4)+")";
+			sqlQuery = sqlQuery.substring(0, sqlQuery.length()-4)+")";
 		}
 
-		LOGGER.info("Activity DAO is going to perform the query: " + sql_init);
+		LOGGER.info("Activity DAO is going to perform the query: " + sqlQuery);
 	
 		List<Activity> result = new ArrayList<>();
 		Connection con = null;
@@ -273,7 +269,7 @@ public class JDBCActivityDAO implements ActivityDAO {
 		try {
 			con = dataSource.getConnection();
 			st = con.createStatement();
-			rs = st.executeQuery(sql_init);
+			rs = st.executeQuery(sqlQuery);
 			
 			// Populate days and categories list
 			while(rs.next()) {
